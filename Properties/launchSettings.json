@@ -1,0 +1,27 @@
+﻿{
+  "profiles": {
+    "GCAI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:9210;https://localhost:9121"
+    }
+  },
+  "Kestrel": {
+    "Endpoints": {
+      "MyHttpsEndpoint": {
+        "Url": "http://162.205.232.101:5004;https://162.205.232.101:5004",
+        "SslProtocols": [
+          "Tls12",
+          "Tls13"
+        ],
+        "Certificate": {
+          "Path": "gcio.pfx",
+          "Password": "Rock#tow0909"
+        }
+      }
+    }
+  }
+}

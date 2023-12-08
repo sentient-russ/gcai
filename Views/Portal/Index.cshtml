@@ -1,0 +1,139 @@
+﻿@model gcai.Models.AppUser
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Identity
+@using System.Net
+@using gcai.Data
+@using gcai.Models
+@{
+	ViewData["Title"] = "GCAI Portal";
+}
+<div>
+    <div class="body-text-container"
+        <div class="body-text">
+                <h3 class="general-heading-dark">Good day, @ViewData["screenname"]!</h3>
+                <p class="general-body-text">Private email: @Model.UserName</p>
+                <p class="general-body-text">Private Sobriety Date: @Model.SobrietyDate</p>
+                <p class="general-body-text">Thank you for @Model.Contributions contributions!</p>
+        </div>
+    </div>
+<center>
+<div class="flexbox-container-portal">
+    <div class="row-portal">
+    <div class="table-lable">
+        <h3>
+            Favorites
+        </h3>
+    </div>
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Content
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.favorites)
+            {
+                <tr>
+                    <td class="medred-text">
+                        @Html.DisplayFor(modelItem => item.PostDate)
+                    </td>
+                    <td class="medgrey-text">
+
+                        @Html.DisplayFor(modelItem => item.Truth)
+                        @Html.DisplayFor(modelItem => item.Humor)
+                        @Html.DisplayFor(modelItem => item.Problem)
+                        @Html.DisplayFor(modelItem => item.Solution)
+
+                    </td>
+                    <td class="medgrey-text">
+                                    <a asp-action="RemoveFavorite" asp-controller="PortalController" name="TaskRef" asp-route-id="@item.idPostModel">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div class="flexbox-container-portal">
+        <div class="row-portal">
+            <div class="table-lable">
+                <h3>
+                    Post Contributions
+                </h3>
+            </div>
+        </div>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Content
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Posts)
+                {
+                    <tr>
+                        <td class="medred-text">
+                            @Html.DisplayFor(modelItem => item.PostDate)
+                        </td>
+                        <td class="medgrey-text">
+
+                            @Html.DisplayFor(modelItem => item.Truth)
+                            @Html.DisplayFor(modelItem => item.Humor)
+                            @Html.DisplayFor(modelItem => item.Problem)
+                            @Html.DisplayFor(modelItem => item.Solution)
+
+                        </td>
+                        <td class ="medgrey-text">
+                             <a  asp-action="Edit" asp-controller="PortalController" name="TaskRef" asp-route-id="@item.idPostModel">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+          </table>
+    </div>
+</div>
+    </center>
+<br />
+<br />
+<br />
+<br />
+<center>
+	@{
+		if (User.Identity.IsAuthenticated)
+		{
+			<div class="flexbox-container flexbox-container-bottom">
+                <center><h3 class="general-heading">Click here to log out.</h3></center>
+				<div class="logout-button"> 
+					<a href="/Identity/Account/Logout/">
+						<input type="button" class="button-action-call" value="Logout">
+					</a>
+				</div>
+			</div>
+		}
+		else
+		{
+			<p>You have successfully logged out of the application.</p>
+		}
+	}
+</center>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
