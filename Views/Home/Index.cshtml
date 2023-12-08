@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "GroupConscience";
+}
+
+<div class="intro-heading">
+    Together, we make contributions with a seemingly infinite reach;
+</div>
+<div class="intro-text general-body-text">
+    by placing our anonymous beliefs within a collective AI conscience.
+</div>
+<div class="intro-text general-body-text">
+    If you have a desire to stop drinking or stay sober, you are invited to contribute by using the form below. May the power behind the program be your guide.
+</div>
+<div class="toggle-container">
+    <div class="on-off-toggle">
+        <input class="on-off-toggle__input" type="checkbox" id="bopis" />
+        <label for="bopis" class="on-off-toggle__slider"></label>
+    </div>
+</div>
+<div class="card">
+    <div class="card__inner" id="card__inner">
+        <div class="card__face card__face--front">
+            <div class="post-container" id="testid">
+                <div class="tab-row">
+                    <div class="tab1 tab active">Truth<div class="indicator1 indicator active"></div></div>
+                    <div class="tab2 tab">Humor<div class="indicator2 indicator"></div></div>
+                    <div class="tab3 tab">Question / Answer<div class="indicator3 indicator"></div></div>
+                </div>
+                <input type="text" id="userInput" value="Anonymous" hidden />
+                <textarea class="post-message-container1 content active" type="text" id="messageInputTruth" placeholder="Enter your truth here."></textarea>
+                <textarea class="post-message-container2 content active" type="text" id="messageInputHumor" placeholder="Make us laugh here."></textarea>
+                <textarea class="post-message-container3 content active" type="text" id="messageInputProblem" placeholder="Enter your problem or question here."></textarea>
+                <textarea class="post-message-container4 content active" type="text" id="messageInputSolution" placeholder="Enter your solution or answer here."></textarea>
+                <div class="button-row">
+                    <div class="button1"></div>
+                    <div class="button2"></div>
+                    <div class="button3"></div>
+                    <div class="button4" type="button" value="Clear" onclick="javascript:eraseText();">Clear</div>
+                    <div class="button5" type="button" id="sendButton">Submit</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__face card__face--back">
+            <div class="post-container" id="testid">
+                <div class="tab-row">
+                    <div class="tab4-ai tab active">AI<div class="indicator4-ai indicator"></div></div>
+                </div>
+                <input type="text" id="userInput" value="Anonymous" hidden />
+                <textarea class="post-message-container5-AI content active" type="text" id="messageInputAI" placeholder="Enter your AA related question here."></textarea>
+
+                <div class="button-row">
+                    <div class="button1"></div>
+                    <div class="button2"></div>
+                    <div class="button3"></div>
+                    <div class="button4" type="button" value="Clear" onclick="javascript:eraseText();">Clear</div>
+                    <div class="button5" type="button" id="sendButton2">Submit</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<br />
+<div class="spinner hidden">
+    <div class="sk-grid">
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+        <div class="sk-grid-cube"></div>
+    </div>
+</div>
+<div class="messages-container" id="insert-messages"></div>
+<div class="ai-container" id="insert-ai-response"></div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<script src="~/js/signalr/dist/browser/signalr.js"></script>

@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using gcai.Models
+@using gcai.Services
+@using gcai.Data
+@using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@{
+    DataAccess dataAccess = new DataAccess();
+    string pepper = "";
+    string? uname = "Anonymous";
+    string? screenname = "Anonymous";
+    string? contributions = "0";
+    if (UserManager.GetUserName(User) != null){
+        pepper = dataAccess.GetPepper(UserManager.GetUserName(User));
+        uname = UserManager.GetUserName(User);
+        contributions = dataAccess.GetUserContributions(uname);
+        screenname = dataAccess.GetScreenName(UserManager.GetUserName(User));
+    }
+}
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="pepper hidden" id="@pepper"></div>
+        <div class="jam hidden" id="@uname"></div>
+        <div class="screenname hidden" id="@screenname"></div>
+        <div class="contributions hidden" id="@contributions"></div>
+        <div class="username hidden" id="@uname"></div>
+        <a asp-area="Portal" asp-controller="Portal" asp-action="Index">
+        <li class="nav-item tag-button">
+            <div class="flex-column">
+                <div class="user-tag-row">
+                    <span class="nav-link text-dark" >
+                        Welcome back,&nbsp<span class="name-color">@screenname</span>!
+                    </span>
+            </div>
+                <div class="user-tag-row">
+                    <div class="flex-column total-contributions">
+                        @contributions
+                    </div>
+                    <div class="flex-column tag-column">
+                        <span class="material-symbols-outlined">social_leaderboard</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        </a>
+        <a class="form-inline tag-button" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <li class="nav-item ">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+        </a>
+    }
+    else
+    {
+        <div class="pepper hidden" id="Anonymous">Hello Anonymous! </div>
+        <div class="jam hidden" id="anonymous@magandigi.com"></div>
+        <div class="screenname hidden" id="Anonymous"></div>
+        <div class="contributions hidden" id="0"></div>
+        <div class="username hidden" id="anonymous@magandigi.com"></div>
+        <a class="nav-link text-dark tag-button" id="register" asp-area="Identity" asp-page="/Account/Register">
+            <li class="nav-item tag-button-sub">Register</li>
+        </a>
+        <a class="nav-link text-dark tag-button" id="login" asp-area="Identity" asp-page="/Account/Login">
+        <li class="nav-item tag-button-sub">Login</li>
+        </a>
+    }
+</ul>
