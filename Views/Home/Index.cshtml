@@ -1,36 +1,64 @@
 ﻿@{
     ViewData["Title"] = "GroupConscience";
 }
-
-<div class="intro-heading">
-    Together, we make contributions with a seemingly infinite reach;
-</div>
-<div class="intro-text general-body-text">
-    by placing our anonymous beliefs within a collective AI conscience.
-</div>
-<div class="intro-text general-body-text">
-    If you have a desire to stop drinking or stay sober, you are invited to contribute by using the form below. May the power behind the program be your guide.
-</div>
-<div class="toggle-container">
-    <div class="on-off-toggle">
-        <input class="on-off-toggle__input" type="checkbox" id="bopis" />
-        <label for="bopis" class="on-off-toggle__slider"></label>
+<div class="banner">
+    <img class="banner-img" src="~/img/banner-4.png" />
+    <div class="banner-text-container">
+        <div class="banner-text-row">
+            "For our group purpose there is but one ultimate authority—a loving God as He may express Himself in our group conscience."
+        </div>
     </div>
 </div>
-<div class="card">
+<div class="banner-container">
+    <div class="banner-row">
+        <div class="angled-left">
+            <div class="io-example-heading-left">
+               Share.
+            </div>
+            <img class="io-example" src="~/img/io.png" />
+        </div>
+        <div class="angled-right">
+            <div class="io-example-heading-right">
+               Chat with A.I.
+            </div>
+            <img class="io-example" src="~/img/ai.png" />
+        </div>
+    </div>
+</div>
+<div class="scrollholder" id="test-id"></div>
+<div class="intro-heading-ai" id="intro_ai" >
+    Our collective conscience is here to aid in your recovery journey by providing grounded literature and member-supplemented information.
+</div>
+<div class="intro-heading" id="intro_io">
+    Together, we make contributions with an immense reach; by placing our anonymous beliefs within a collective AI conscience.
+</div>
+<div class="intro-text general-body-text" id="intro-text">
+    If you have a desire to stop drinking or stay sober, you are invited to contribute using this form. Registered users gain the abillity to have votes counted. Additionally, their favorites and posts can be managed under their profile. May the power behind the program be your guide.
+</div>
+<div class="toggle-container" >
+    <span class="toggle-description">Toggle Share/Chat mode.</span>
+    <div class="on-off-toggle" >
+        <input class="on-off-toggle__input" type="checkbox" id="bopis" />
+        <label for="bopis" class="on-off-toggle__slider"></label>
+    </div> 
+</div>
+<div class="card" id="card">
     <div class="card__inner" id="card__inner">
         <div class="card__face card__face--front">
-            <div class="post-container" id="testid">
+            <div class="post-container" >
+                <div class="card-header">
+                    Share with us.
+                </div>
                 <div class="tab-row">
                     <div class="tab1 tab active">Truth<div class="indicator1 indicator active"></div></div>
                     <div class="tab2 tab">Humor<div class="indicator2 indicator"></div></div>
-                    <div class="tab3 tab">Question / Answer<div class="indicator3 indicator"></div></div>
+                    <div class="tab3 tab">Prob / Solution<div class="indicator3 indicator"></div></div>
                 </div>
                 <input type="text" id="userInput" value="Anonymous" hidden />
                 <textarea class="post-message-container1 content active" type="text" id="messageInputTruth" placeholder="Enter your truth here."></textarea>
                 <textarea class="post-message-container2 content active" type="text" id="messageInputHumor" placeholder="Make us laugh here."></textarea>
-                <textarea class="post-message-container3 content active" type="text" id="messageInputProblem" placeholder="Enter your problem or question here."></textarea>
-                <textarea class="post-message-container4 content active" type="text" id="messageInputSolution" placeholder="Enter your solution or answer here."></textarea>
+                <textarea class="post-message-container3 content active" type="text" id="messageInputProblem" placeholder="Enter a problem here."></textarea>
+                <textarea class="post-message-container4 content active" type="text" id="messageInputSolution" placeholder="Enter the solution here."></textarea>
                 <div class="button-row">
                     <div class="button1"></div>
                     <div class="button2"></div>
@@ -42,12 +70,14 @@
         </div>
         <div class="card__face card__face--back">
             <div class="post-container" id="testid">
+                <div class="card-header">
+                    Chat with A.I.
+                </div>
                 <div class="tab-row">
                     <div class="tab4-ai tab active">AI<div class="indicator4-ai indicator"></div></div>
                 </div>
                 <input type="text" id="userInput" value="Anonymous" hidden />
                 <textarea class="post-message-container5-AI content active" type="text" id="messageInputAI" placeholder="Enter your AA related question here."></textarea>
-
                 <div class="button-row">
                     <div class="button1"></div>
                     <div class="button2"></div>
@@ -55,10 +85,8 @@
                     <div class="button4" type="button" value="Clear" onclick="javascript:eraseText();">Clear</div>
                     <div class="button5" type="button" id="sendButton2">Submit</div>
                 </div>
-
             </div>
         </div>
-
     </div>
 </div>
 <br />
@@ -98,3 +126,7 @@
 <br />
 <br />
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
+@* This section only in non sensitive areas *@
+@section Scripts {
+    <partial name="_GoogleAnalytics" /> 
+}

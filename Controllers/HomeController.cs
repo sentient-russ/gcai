@@ -21,7 +21,10 @@ namespace gcai.Controllers
         {
             return View();
         }
-
+        public IActionResult AI()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
