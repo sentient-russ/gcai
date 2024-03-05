@@ -8,8 +8,8 @@
     <div class="login-container-column">
         <form method="post">
             <div class="login-logo">
-                <h1>@ViewData["Title"]</h1>
-                </br>
+                <center><img style="max-height:150px;" src="/img/gcai_logo_light.png"></center>
+                <center>@ViewData["Title"]</center>
                 <p><h2>Enter your email.</h2></p>
             </div>
             <div asp-validation-summary="All" class="text-danger" role="alert"></div>
@@ -26,3 +26,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+

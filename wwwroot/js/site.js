@@ -1,9 +1,12 @@
 ﻿"use strict";
+
 var connection = new signalR.HubConnectionBuilder().withUrl("/posthub").build();
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 document.getElementById("userInput").value = "Anonymous";
 document.getElementById("userInput").disabled = true;
+
+
 //this starts the indicator that the backend system is processing.
 function startSpin() {
     const spinnerClass = document.querySelectorAll('.spinner');
@@ -39,7 +42,6 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div2.classList.add("user-message-container");
     div2.id = id;
     const loggedInScreename = document.querySelector(".screenname").id;
-    /*----------------------------*/
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -70,7 +72,6 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div16.classList.add("avatar-row-user-badge");
     div16.textContent = "social_leaderboard";
     div15.appendChild(div16);
-    /*----------------------------*/
     var div13 = document.createElement("div");
     div13.classList.add("avatar-column");
     div3.appendChild(div13);
@@ -124,7 +125,7 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     img4.classList.add('filter-gold');
     img4.src = "/img/star.svg";
     div8.appendChild(img4);
-    var img5 = document.createElement('img')
+    var img5 = document.createElement('img');
     img5.classList.add('report');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
@@ -134,13 +135,13 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     initButtonRow();
 });
 
+
 connection.on("ReceiveMessageHumor", function (user, message, id, screenname, contributions) {
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
     div2.classList.add(id);
-    /*----------------------------*/
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -171,7 +172,6 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div16.classList.add("avatar-row-user-badge");
     div16.textContent = "social_leaderboard";
     div15.appendChild(div16);
-    /*----------------------------*/
     var div13 = document.createElement("div");
     div13.classList.add("avatar-column");
     div3.appendChild(div13);
@@ -244,7 +244,6 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
     div2.classList.add(id);
-    /*----------------------------*/
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -275,7 +274,6 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div16.classList.add("avatar-row-user-badge");
     div16.textContent = "social_leaderboard";
     div15.appendChild(div16);
-    /*----------------------------*/
     var div13 = document.createElement("div");
     div13.classList.add("avatar-column");
     div3.appendChild(div13);
@@ -347,14 +345,13 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     document.getElementById("insert-messages").prepend(div2);
     stopSpin();
     initButtonRow();
-
 });
 
 connection.on("ReceiveAIResponse", function (user, query, response, id, screenname) {
 
     document.getElementById("insert-ai-response").classList.add("messages-container");
     var div2 = document.createElement("div");
-    div2.classList.add("user-message-container");
+    div2.classList.add("ai-message-container");
     div2.classList.add(id);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
@@ -388,22 +385,22 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     div4.classList.add('response-row');
     div2.appendChild(div4);
     var div5 = document.createElement('div');
-    div5.classList.add("response-column1");
+    div5.classList.add("ai-response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
     var div6 = document.createElement('div');
-    div6.classList.add("response-column2");
+    div6.classList.add("ai-response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
     var div7 = document.createElement('div');
-    div7.classList.add("response-column5");
+    div7.classList.add("ai-response-column5");
     div4.appendChild(div7);
     var div8 = document.createElement('div');
-    div8.classList.add("response-column3");
+    div8.classList.add("ai-response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
     var div9 = document.createElement('div');
-    div9.classList.add("response-column4");
+    div9.classList.add("ai-response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
     var img2 = document.createElement('img')
@@ -416,11 +413,11 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     img3.classList.add('filter-red');
     img3.src = "/img/thumbs-down.svg";
     div6.appendChild(img3);
-    var img4 = document.createElement('img')
-    img4.classList.add('star');
-    img4.classList.add('filter-gold');
-    img4.src = "/img/star.svg";
-    div8.appendChild(img4);
+    /*    var img4 = document.createElement('img')
+        img4.classList.add('star');
+        img4.classList.add('filter-gold');
+        img4.src = "/img/star.svg";
+        div8.appendChild(img4);*/
     var img5 = document.createElement('img')
     img5.classList.add('report');
     img5.classList.add('filter-red');
@@ -438,12 +435,18 @@ connection.on("UpdateContributions", function (user, updatedContributions) {
     }
 });
 
-//outgoing message handling
+//starts connection and initiates responses.
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     let starting = 0;
     let ending = 10;
     connection.invoke("SendMessages", starting, ending);
+    /*document.getElementById("testid").scrollIntoView();*/
+    var user = document.querySelector('.jam').id;
+    var screenname = document.querySelector('.screenname').id;
+    connection.invoke("helloAI", user, screenname).catch(function (err) {
+        return console.error(err.toString());
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -482,27 +485,26 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 });
 function aiNotification() {
 
-    $.toast({
-        text: 'This website cannot be trusted to give sound advice. AI is in its infancy and we suggest checking with your local AA group, sponsor, and healthcare professional before making use of any information you find here.',
-        heading: 'Warning',
-        showHideTransition: 'slide',
-        hideAfter: 15000,
-        position: 'bottom-center',
-        icon: 'warning',
-        allowToastClose: true,
-    })
-    $.toast({
-        text: 'Currently I am a little slow.  Please be patient!',
-        heading: 'Thinking through it now....',
-        showHideTransition: 'slide',
-        hideAfter: 20000,
-        position: 'bottom-center',
-
-    })
-
+    /*    $.toast({
+            text: 'Check with your local AA group, sponsor, and or a healthcare professional before making use of any information you find here. This website generates responses based on mathmatical probabilities and is not a replacement for good human judgement.',
+            heading: 'Warning',
+            showHideTransition: 'slide',
+            hideAfter: 6000,
+            position: 'bottom-center',
+            icon: 'warning',
+            allowToastClose: true,
+        })*/
+    /*    $.toast({
+            text: 'Please be patient!',
+            heading: 'Thinking through it now....',
+            showHideTransition: 'slide',
+            hideAfter: 3000,
+            position: 'bottom-center',
+    
+        })*/
 }
 document.getElementById("sendButton2").addEventListener("click", function (event) {
-    document.getElementById("testid").scrollIntoView();
+    
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     const tabs = document.querySelectorAll('.tab');
@@ -510,6 +512,7 @@ document.getElementById("sendButton2").addEventListener("click", function (event
     aiNotification();
     console.log('Should be spinning');
     if (tabs[3].classList.contains('active')) {
+        document.getElementById("testid").scrollIntoView();
         var queryAI = document.getElementById("messageInputAI").value;
         let postId = "0";
         connection.invoke("ProccessAI", user, queryAI, postId, screenname).catch(function (err) {
@@ -579,7 +582,7 @@ function initButtonRow() {
         var userNameOut = jam.toString();
         var messageIdOut = col3.id;
         var screenNameOut = screenname;
-
+        connection = this.connection;
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
             return console.error(err.toString());
         });
@@ -615,17 +618,17 @@ function initButtonRow() {
                 loader: true,
                 stack: 4,
                 position: 'bottom-center',
-                hideAfter: 4000,
+                hideAfter: 5000,
             })
         } else {
             $.toast({
                 heading: 'Submitted',
-                text: 'Success! Note: One vote per user, per post.',
+                text: 'Success! Note: Only one vote per user, per post will be counted.',
                 icon: 'success',
                 loader: true,
                 stack: 4,
                 position: 'bottom-center',
-                hideAfter: 4000,
+                hideAfter: 5000,
             })
         }
     }
@@ -638,9 +641,7 @@ function initButtonRow() {
         'trim': true, // Trim the string to type (Default: false, does not trim)
         'callback': null // if exists, called after all effects have finished
     });
-
 }
-
 //clear button
 function eraseText() {
     document.getElementById("messageInputTruth").value = "";
@@ -649,9 +650,27 @@ function eraseText() {
     document.getElementById("messageInputSolution").value = "";
     document.getElementById("messageInputAI").value = "";
 }
+//Invokes initial AI message from the server.
+function invokeIAHello() {
+    
+    var user = document.querySelector('.jam').id;
+    var screenname = document.querySelector('.screenname').id;
+    connection.invoke("helloAI", user, screenname).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
 //make sure AI messages are hidden on page reload
-const aiMessaagesClass = document.querySelectorAll('.ai-container');
-aiMessaagesClass.forEach(elem => { elem.classList.add('hidden') });
+function hideAIResponsContainer() {
+    const aiMessaagesClass = document.querySelectorAll('.ai-container');
+    aiMessaagesClass.forEach(elem => { elem.classList.add('hidden') });
+}
+hideAIResponsContainer();
+//hide old ai messages after toggle
+function hideAIResponses() {
+    const aiMessaagesClass = document.querySelectorAll('.ai-message-container');
+    aiMessaagesClass.forEach(elem => { elem.classList.add('hidden') });
+}
 //hide or reveal messages
 function hidePostMessages() {
     const postMessaagesClass = document.querySelectorAll('.messages-container');
@@ -660,6 +679,7 @@ function hidePostMessages() {
 function revealPostMessages() {
     const postMessaagesClass = document.querySelectorAll('.messages-container');
     postMessaagesClass.forEach(elem => { elem.classList.remove('hidden') });
+    hideAIMessages();
 }
 function hideAIMessages() {
     const aiMessaagesClass = document.querySelectorAll('.ai-container');
@@ -668,31 +688,61 @@ function hideAIMessages() {
 function revealAIMessages() {
     const aiMessaagesClass = document.querySelectorAll('.ai-container');
     aiMessaagesClass.forEach(elem => { elem.classList.remove('hidden') });
+    hideAIResponses(); //creates a fresh start
     invokeIAHello();
 }
-//Invokes initial AI message from the server.
-function invokeIAHello() {
-    document.getElementById("testid").scrollIntoView();
-    var user = document.querySelector('.jam').id;
-    var screenname = document.querySelector('.screenname').id;
-    connection.invoke("helloAI", user, screenname).catch(function (err) {
-        return console.error(err.toString());
-    });
+const messageInputAI = document.querySelectorAll('.messageInputAI');
+function showAI() {
+    hideAIResponses();
+    hidePostMessages();
+    revealAIMessages();
+    indicators.forEach(indicator => { indicator.classList.remove('active') });
+    indicators[3].classList.add('active');
+
+    messageInputAI.forEach(elem => { elem.classList.remove('hide_textarea') });
+
+
+    contents.forEach(content => { content.classList.remove('active') });
+    contents.forEach(content => { content.classList.remove('hide_textarea') });
+    contents[0].classList.add('hide_textarea');
+    contents[1].classList.add('hide_textarea');
+    contents[2].classList.add('hide_textarea');
+    contents[3].classList.add('hide_textarea');
+    contents[4].classList.add('active');
+    tabs[3].classList.add('active');
+
 }
+function showIO() {
+
+    hideAIMessages();
+    revealPostMessages();
+    indicators.forEach(indicator => { indicator.classList.remove('active') });
+    indicators[0].classList.add('active');
+
+    contents.forEach(content => { content.classList.remove('active') });
+    contents.forEach(content => { content.classList.remove('hide_textarea') });
+    contents[1].classList.add('hide_textarea');
+    contents[2].classList.add('hide_textarea');
+    contents[3].classList.add('hide_textarea');
+    contents[4].classList.add('hide_textarea');
+    contents[0].classList.add('active');
+}
+
+
+
+
+
 //tabs handling
 const tabs = document.querySelectorAll('.tab');
 const indicators = document.querySelectorAll('.indicator');
 const contents = document.querySelectorAll('.content');
-
 contents.forEach(content => { content.classList.remove('hide_textarea') });
 contents[1].classList.add('hide_textarea');
 contents[2].classList.add('hide_textarea');
 contents[3].classList.add('hide_textarea');
-
 contents[0].classList.add('active');
 indicators[0].classList.add('active');
 tabs[0].classList.add('active');
-
 tabs.forEach((tab, index) => {
     tab.addEventListener('click', (e) => {
         eraseText();
@@ -724,7 +774,6 @@ tabs.forEach((tab, index) => {
             contents[3].classList.add('hide_textarea');
             contents[4].classList.add('hide_textarea');
             contents[1].classList.add('active');
-
         }
         if (tab.classList[0].includes('tab3')) {
             indicators.forEach(indicator => { indicator.classList.remove('active') });
@@ -737,7 +786,6 @@ tabs.forEach((tab, index) => {
             contents[4].classList.add('hide_textarea');
             contents[2].classList.add('active');
             contents[3].classList.add('active');
-
         }
         if (tab.classList[0].includes('tab4-ai')) {
             indicators.forEach(indicator => { indicator.classList.remove('active') });
@@ -751,26 +799,41 @@ tabs.forEach((tab, index) => {
             contents[3].classList.add('hide_textarea');
             contents[4].classList.add('active');
             tabs[3].classList.add('active');
-            
         }
     })
 })
 //end tabs
 
 //begin card flip
+document.getElementById("bopis").checked = true;
 const toggle_button = document.querySelector('.on-off-toggle__input');
 const card = document.getElementById('card__inner');
 
+var intro_text = document.getElementById('intro-text');
+var intro_ai = document.getElementById('intro_ai');
+var intro_io= document.getElementById('intro_io');
+intro_text.classList.add('intro-hidden');
+intro_io.classList.add('intro-hidden');
+intro_ai.classList.add('intro-un-hidden');
+
+
 toggle_button.addEventListener('click', function () {
     eraseText();
-
     card.classList.toggle('is--flipped');
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    //this is the ai reveal
     if (card.classList.contains('is--flipped')) {
-        revealAIMessages();
+        
         hidePostMessages();
+        revealAIMessages();
+        intro_text.classList.remove('intro-un-hidden');
+        intro_text.classList.add('intro-hidden');
+        intro_ai.classList.add('intro-un-hidden');
+        intro_ai.classList.remove('intro-hidden');
+        intro_io.classList.remove('intro-un-hidden');
+        intro_io.classList.add('intro-hidden');
         indicators.forEach(indicator => { indicator.classList.remove('active') });
         indicators[3].classList.add('active');
-
         contents.forEach(content => { content.classList.remove('active') });
         contents.forEach(content => { content.classList.remove('hide_textarea') });
         contents[0].classList.add('hide_textarea');
@@ -779,11 +842,18 @@ toggle_button.addEventListener('click', function () {
         contents[3].classList.add('hide_textarea');
         contents[4].classList.add('active');
         tabs[3].classList.add('active');
-
     }
+    //this is the io reveal
     if (!card.classList.contains('is--flipped')) {
-        revealPostMessages();
         hideAIMessages();
+        revealPostMessages();
+        intro_text.classList.remove('intro-hidden');
+        intro_text.classList.add('intro-un-hidden');
+        intro_io.classList.add('intro-un-hidden');
+        intro_io.classList.remove('intro-hidden');
+        intro_ai.classList.remove('intro-un-hidden');
+        intro_ai.classList.add('intro-hidden');
+
         indicators.forEach(indicator => { indicator.classList.remove('active') });
         indicators[0].classList.add('active');
         contents.forEach(content => { content.classList.remove('active') });
@@ -797,5 +867,35 @@ toggle_button.addEventListener('click', function () {
 });
 //end card flip
 
+function onLoadAI() {
+    eraseText();
+    if (card.classList.contains('is--flipped')) {
+        /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });*/
+        showAI();
+    }
+    if (!card.classList.contains('is--flipped')) {
 
+        card.classList.toggle('is--flipped');
+        /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });*/
+        document.getElementById("bopis").checked = false;
+        showAI();
+    }
+}
 
+const select_io = document.querySelector('.angled-left');
+const select_ai = document.querySelector('.angled-right');
+select_io.addEventListener('click', function () {
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    if (document.getElementById('bopis').checked == false) {
+        toggle_button.click();
+    }
+});
+select_ai.addEventListener('click', function () {
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    
+    if (document.getElementById('bopis').checked == true) {
+        toggle_button.click();
+    }
+});
+
+onLoadAI();

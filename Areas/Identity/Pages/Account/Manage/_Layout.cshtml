@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="stylesheet" type="text/css" href="~/css/spinkit.css">
     <link rel="stylesheet" type="text/css" href="~/css/jquery.toast.css">
+    
 </head>
 <body>
     <header>
@@ -59,3 +60,4 @@
 <script src="~/js/jquery.toast.js" asp-append-version="true"></script>
 <script src="~/js/jquerytypewriter.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
+@RenderSection("GoogleAnalyticsScript",true)

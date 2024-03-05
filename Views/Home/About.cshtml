@@ -9,20 +9,22 @@
     </center>
 </div>
 <div class="intro-text">
-    <p class="general-body-text">Groupconscience.io gives individual members a chance to contribute and vote on posted truths put forward by fellow recovering alcoholics. In turn, the truths that have the highest acceptance are periodically ingested to improve the AI model. Thus the responses will reflect the characteristics of the people that contribute over time.</p>
+    <p class="general-body-text">Groupconscience.ai gives individual members a chance to contribute and vote on posted truths put forward by fellow recovering alcoholics. In turn, the truths that have the highest acceptance are periodically ingested to improve the AI model. Thus, the responses reflect the conscience of the people that have contributed over time.</p>
 
-    <p class="general-body-text">This is a bottom-up, rather than top-down approach.  Here, individuals decide which post to promote rather than large companies.  At this point our AI is based on the LLAMA2 15b (Wikipedia) model. Our aim is to gather enough input from our members to generate a model that reflects our precious beliefs.  We aim to have a Large Language Model (LLM) that responds in a way similar to what one might hear in person at one of our meetings.</p>
+    <p class="general-body-text">This is a bottom-up, rather than top-down approach.  Here individuals decide which posts to promote rather than companies or other outside influences.  At this point our AI is based on a refined version of the LLAMA2 (Wikipedia based) model. Our aim is to gather enough input from our members to generate a model that reflects our precious beliefs.  This way the LLM can respond in a way similar to what one might hear in person at one of our meetings.</p>
 
-    <p class="general-body-text">In the end we expect that anything this experiment becomes, will be exactly what the individuals that contribute make it.  In other words for better, worse, or not at all; it’s in our hands. I would like to encourage you to think about the ways that a newcomer may look for help in the future. My belief is that it would be rather unfortunate if the technology they use is insufficient to the task. I cannot do this alone.  If you are "one of us", I emplore you to make this site a part of your daily 12th step journey in helping others.</p>
+    <p class="general-body-text">In the end we expect that anything this experiment becomes, will be exactly what the individuals that contribute make it.  In other words for better, worse, or not at all; it’s in our hands. I would like to encourage you to think about the ways that a newcomer may look for help in the future. It would be rather unfortunate if the technology they use is insufficient to the task. So by all means, jump on in and share with us. Let's make this the perfectly imperfect extension of our our higher powers love and grace; just like the AA meetings we have all come to know and enjoy.</p>
+    <p class="general-body-text">Questions, comments, concerns??  We would love to hear from you if your inclined to share your thoughts with us.  Here is the best way to get in touch.</p>
 </div>
 <section class="flexbox-contact-page-container">
     <div class="flexbox-container center">
         <div class="dialog-box-container">
-            @*Start new form here.*@
             <div class="flexbox-container">
                 <form method="post" action="/Contact" enctype="multipart/form-data">
-                    <center><img class="contact-img" src="/icon/device-message.svg"/></center>
-                    <center><h1>Contact</h1></center>
+                    <div class="contact-heading">
+                        <center><img src="/icon/device-message.svg" style="height:100px;justify-content:center;" /></center>
+                        <center>Contact</center>
+                    </div>
                     <div class="form-floating mb-3">
                         <p><div asp-validation-summary="ModelOnly" class="alert-color hidden"></div></p>
                         <input asp-for="Name" id="Name" class="form-control" placeholder="First/Last Name" required />
@@ -51,20 +53,8 @@
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+@* This section only in non sensitive areas *@
+@section Scripts {
+    <partial name="_GoogleAnalytics" />
+}

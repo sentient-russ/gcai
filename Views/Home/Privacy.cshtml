@@ -2,60 +2,53 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-@* @section GoogleAnalyticsScript{
-    <!-- Google tag (gtag.js) which is only loaded outside of customer portal-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX92D67Z8T"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-WX92D67Z8T');
-    </script>
-} *@
 <div class="intro-text">
-    <center><h3 class="general-heading">@ViewData["Title"]</h3></center>
+    <center>
+        <img class="ai-logo" src="~/img/gcai_logo_light.png" />
+        <p><h2 class="general-heading">@ViewData["Title"]</h2></p>
+    </center>
 </div>
 <div class="intro-text general-body-text">
-    <p>
-        <h3>
+
+        <p class="heading1">
             Privacy:
-        </h3>
-    </p>
+        </p>
 
     <p>Our primary purpose is to help alcoholics recover from alcoholism. With that in mind, here are steps we take to ensure the privacy of our users.</p>
-
-    <p>All features of this site are kept in-house. This includes and is not limited to the following.</p>
+    
+    <p>All features of this site are kept in-house. We do not and will not share or sell data; period. All interaction is between your device and our servers.  If you see the locked padlock icon next to the address bar on your browser, it means that the data being sent from you to us and back is encrypted.  It cannot be intercepted and deciphered by any system in between.</p>
+    <span><img class="secured-img" src="/img/secured.png" /></span>
+    <br />
+    <p>In-house features:</p>
     <ul>
-        <li>Databases</li>
-        <li>Data Processing including AI (Note that this means we are currently limited to open source LLM's combined with our in-house embedings)</li>
+        <li>Databases (Your information never leaves our servers.)</li>
+        <li>Backup (As stated, your information never leaves our servers.)</li>
+        <li>Data Processing including AI (We use our Large Language Models and custom embedings rather than third party application interfaces.)</li>
         <li>User Accounts (This is why you will not see the service known as single-sign-in implemented from Google or other providers.)</li>
     </ul>
 
-    <p>
-        <h3>
+
+    <p class="heading1">
             User Profile Information:
-        </h3>
     </p>
 
     <p>All user profile information is provided on a voluntary basis.  There are no input fields for our user's real names for a reason. We ask that when selecting a username that you do not pick one that can be attributed to you from any other account or alias. There are some voluntary fields under the user profile section that GroupConscience.io may use to improve our services. These imputs may be used for future features that allow the AI to give results based on sobriety length, etc. We ask that if you decide to use them that you keep them current and honest.</p>
 
     <p>
-        <h3>
+    <p class="heading1">
             User Data Entry:
-        </h3>
     </p>
 
     <p>Questions that our users ask to AI and the posts made through the input (IO) data entry may be included in public AI responses.  Please post with care.  Do not use any personally identifiable information in AI or post (Truth/Humor/Q&A) prompts.</p>
 
 
     <p>
-        <h3>
-            Summery
-        </h3>
+    <p class="heading1">
+            Conclusion:
     </p>
 
     <p>GroupConcience.io is commited to helping its users and keeping strict adherence to the principle of anonymity.  Please do not hesitate to reach out to us with any concerns using the provided contact form.</p>
+
 </div>
 <section class="flexbox-contact-page-container">
     <div class="flexbox-container center">
@@ -63,8 +56,10 @@
             @*Start new form here.*@
             <div class="flexbox-container">
                 <form method="post" action="/Contact" enctype="multipart/form-data">
-                    <center><img src="/icon/device-message.svg" style="height:100px;justify-content:center;" /></center>
-                    <center><h1>Contact</h1></center>
+                    <div class="contact-heading">
+                        <center><img src="/icon/device-message.svg" style="height:100px;justify-content:center;" /></center>
+                        <center>Contact</center>
+                    </div>
                     <div class="form-floating mb-3">
                         <p><div asp-validation-summary="ModelOnly" class="alert-color hidden"></div></p>
                         <input asp-for="Name" id="Name" class="form-control" placeholder="First/Last Name" required />
@@ -93,20 +88,9 @@
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
+@* This section only in non sensitive areas *@
+@section Scripts {
+    <partial name="_GoogleAnalytics" />
+}
 

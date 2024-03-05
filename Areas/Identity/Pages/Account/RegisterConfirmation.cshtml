@@ -1,24 +1,26 @@
 ﻿@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+    ViewData["Title"] = "Registration confirmation sent!";
 }
-
-<center><h1>@ViewData["Title"]</h1></center>
+<div class="login-logo">
+    <center><img style="max-height:150px;" src="/img/gcai_logo_light.png"></center>
+    <center>@ViewData["Title"]</center>
+</div>
 @{
     if (@Model.DisplayConfirmAccountLink)
     {
         <center>
-            <p>
-                Please check your email to confirm your account.
+            <p class="general-body-text">
+                Please check your email inbox/spam folder to confirm your account.
             </p>
         </center>
     }
     else
     {
         <center>
-            <p>
-                Please check your email to confirm your account.
+            <p class="general-body-text">
+                Please check your email inbox/spam folder to confirm your account.
             </p>
         </center>
     }

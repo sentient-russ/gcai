@@ -3,12 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Our collective conscience is here to aid in your recovery journey by providing grounded literature and member-supplemented information.">
+    <meta name="keywords" content="Recovery, Alcoholism, AI, Chatbot, Group-Conscience, AA, Group, Conscience">
+    <meta name="author" content="Magnadigi.com: Russell Steele">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://groupconscience.ai" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Our collective conscience is here to aid in your recovery journey by providing grounded literature and member-supplemented information." />
+    <meta property="og:url" content="https://groupconscience.ai/" />
+    <meta property="og:site_name" content="GroupConscience.ai" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="~/css/spinkit.css">
     <link rel="stylesheet" type="text/css" href="~/css/jquery.toast.css">
+    <link rel="icon" href="/android-chrome-192x192.png">
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow">
@@ -29,34 +41,36 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                      @*<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AI">AI</a>
+                        </li> *@
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="banner">
-        <img class="banner-img" src="~/img/bw_gathering_banner.jpg" />
-    </div>
+
 
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
-
+    
 </body>
 
 </html>
-<footer class="border-top footer text-muted">
+<footer class="border-top footer text-footer">
     <div class="container">
         &copy; 2023 - GC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         <a asp-area="" asp-controller="Home" asp-action="About">About</a>
         <a asp-area="" asp-controller="Home" asp-action="Terms">Terms</a>
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/post.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/js/jquery.toast.js" asp-append-version="true"></script>
-<script src="~/js/jquerytypewriter.js" asp-append-version="true"></script>
+<script src="~/js/jquery.toast.js"></script>
+<script src="~/js/jquerytypewriter.js"></script>
+
 @await RenderSectionAsync("Scripts", required: false)
