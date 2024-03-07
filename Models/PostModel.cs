@@ -57,6 +57,10 @@ namespace gcai.Models
         [DisplayName("Demotions")]
         public int? NumDemotions { get; set; } = 0;
 
+        [BindProperty(SupportsGet = true, Name = "Demotions")]
+        [DisplayName("Demotions")]
+        public int? NumFavorites { get; set; } = 0;
+
         [BindProperty(SupportsGet = true, Name = "Flags")]
         [DisplayName("Flags")]
         public int? NumFlags { get; set; } = 0;
