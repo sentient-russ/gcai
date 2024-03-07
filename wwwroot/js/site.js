@@ -36,7 +36,7 @@ function eraseText() {
     document.getElementById("messageInputAI").value = "";
 }
 //inbound message handling
-connection.on("ReceiveMessageTruth", function (user, message, id, screenname, contributions) {
+connection.on("ReceiveMessageTruth", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
@@ -55,6 +55,7 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     var span1 = document.createElement('span');
     span1.textContent = `${screenname}`;
     div11.appendChild(span1);
+
     var div15 = document.createElement("div");
     div15.classList.add("user-info-container");
     div10.appendChild(div15);
@@ -62,11 +63,14 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div12.classList.add("avatar-row-user-count");
     div12.textContent = `${contributions}`;
     div12.classList.add('padding-right-5');
+
     if (screenname == loggedInScreename) {
         div12.classList.add("total-contributions");
         updateTotalCounts(contributions);
     }
     div15.appendChild(div12);
+
+
     var div16 = document.createElement("div");
     div16.classList.add("material-symbols-outlined");
     div16.classList.add("avatar-row-user-badge");
@@ -95,21 +99,65 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
+
+
+        var div10 = document.createElement('div');
+        div10.classList.add("vote-count");
+        var span10 = document.createElement('span');
+        span10.textContent = `${qty_upvoted}`;
+        div10.appendChild(span10);
+        div4.appendChild(div10);
+
+
+
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
+
+
+        var div11 = document.createElement('div');
+        div11.classList.add("vote-count");
+        var span11 = document.createElement('span');
+        span11.textContent = `${qty_downvoted}`;
+        div11.appendChild(span11);
+        div4.appendChild(div11);
+    
+
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
+
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
+
+    
+    if (qty_starvoted == "0") { } else {
+        var div12 = document.createElement('div');
+        div12.classList.add("vote-count");
+        var span12 = document.createElement('span');
+        span12.textContent = `${qty_starvoted}`;
+        div12.appendChild(span12);
+        div4.appendChild(div12);
+    }
+
+
+
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
+
+        var div13 = document.createElement('div');
+        div13.classList.add("vote-count");
+        var span13 = document.createElement('span');
+        span13.textContent = `${qty_flagvoted}`;
+        div13.appendChild(span13);
+        div4.appendChild(div13);
+
+
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -121,12 +169,12 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     img3.src = "/img/thumbs-down.svg";
     div6.appendChild(img3);
     var img4 = document.createElement('img')
-    img4.classList.add('star');
+    img4.classList.add('star-img');
     img4.classList.add('filter-gold');
     img4.src = "/img/star.svg";
     div8.appendChild(img4);
     var img5 = document.createElement('img');
-    img5.classList.add('report');
+    img5.classList.add('report-img');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
     div9.appendChild(img5);
@@ -136,7 +184,7 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
 });
 
 
-connection.on("ReceiveMessageHumor", function (user, message, id, screenname, contributions) {
+connection.on("ReceiveMessageHumor", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
@@ -199,21 +247,56 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
+
+    var div10 = document.createElement('div');
+    div10.classList.add("vote-count");
+    var span10 = document.createElement('span');
+    span10.textContent = `${qty_upvoted}`;
+    div10.appendChild(span10);
+    div4.appendChild(div10);
+
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
+
+    var div11 = document.createElement('div');
+    div11.classList.add("vote-count");
+    var span11 = document.createElement('span');
+    span11.textContent = `${qty_downvoted}`;
+    div11.appendChild(span11);
+    div4.appendChild(div11);
+
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
+
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
+
+    if (qty_starvoted == "0") { } else {
+        var div12 = document.createElement('div');
+        div12.classList.add("vote-count");
+        var span12 = document.createElement('span');
+        span12.textContent = `${qty_starvoted}`;
+        div12.appendChild(span12);
+        div4.appendChild(div12);
+    }
+
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
+
+    var div13 = document.createElement('div');
+    div13.classList.add("vote-count");
+    var span13 = document.createElement('span');
+    span13.textContent = `${qty_flagvoted}`;
+    div13.appendChild(span13);
+    div4.appendChild(div13);
+
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -225,12 +308,12 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     img3.src = "/img/thumbs-down.svg";
     div6.appendChild(img3);
     var img4 = document.createElement('img')
-    img4.classList.add('star');
+    img4.classList.add('star-img');
     img4.classList.add('filter-gold');
     img4.src = "/img/star.svg";
     div8.appendChild(img4);
     var img5 = document.createElement('img')
-    img5.classList.add('report');
+    img5.classList.add('report-img');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
     div9.appendChild(img5);
@@ -238,7 +321,7 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     stopSpin();
     initButtonRow();
 });
-connection.on("ReceiveMessageProblemSolution", function (user, problem, solution, id, screenname, contributions) {
+connection.on("ReceiveMessageProblemSolution", function (user, problem, solution, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
@@ -307,21 +390,56 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
+
+    var div10 = document.createElement('div');
+    div10.classList.add("vote-count");
+    var span10 = document.createElement('span');
+    span10.textContent = `${qty_upvoted}`;
+    div10.appendChild(span10);
+    div4.appendChild(div10);
+
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
+
+    var div11 = document.createElement('div');
+    div11.classList.add("vote-count");
+    var span11 = document.createElement('span');
+    span11.textContent = `${qty_downvoted}`;
+    div11.appendChild(span11);
+    div4.appendChild(div11);
+
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
+
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
+
+    if (qty_starvoted == "0") { } else {
+        var div12 = document.createElement('div');
+        div12.classList.add("vote-count");
+        var span12 = document.createElement('span');
+        span12.textContent = `${qty_starvoted}`;
+        div12.appendChild(span12);
+        div4.appendChild(div12);
+    }
+
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
+
+    var div13 = document.createElement('div');
+    div13.classList.add("vote-count");
+    var span13 = document.createElement('span');
+    span13.textContent = `${qty_flagvoted}`;
+    div13.appendChild(span13);
+    div4.appendChild(div13);
+
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -333,12 +451,12 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     img3.src = "/img/thumbs-down.svg";
     div6.appendChild(img3);
     var img4 = document.createElement('img')
-    img4.classList.add('star');
+    img4.classList.add('star-img');
     img4.classList.add('filter-gold');
     img4.src = "/img/star.svg";
     div8.appendChild(img4);
     var img5 = document.createElement('img')
-    img5.classList.add('report');
+    img5.classList.add('report-img');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
     div9.appendChild(img5);
@@ -419,7 +537,7 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
         img4.src = "/img/star.svg";
         div8.appendChild(img4);*/
     var img5 = document.createElement('img')
-    img5.classList.add('report');
+    img5.classList.add('report-img');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
     div9.appendChild(img5);
@@ -430,6 +548,7 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
 //update contributions when current user casts a vote
 connection.on("UpdateContributions", function (user, updatedContributions) {
     var currentUser = document.querySelector('.jam').id;
+    
     if (user == currentUser) {
         updateTotalCounts(updatedContributions);
     }
@@ -440,10 +559,12 @@ connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     let starting = 0;
     let ending = 10;
-    connection.invoke("SendMessages", starting, ending);
+   
     /*document.getElementById("testid").scrollIntoView();*/
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
+
+    connection.invoke("SendMessages", starting, ending, user);
     connection.invoke("helloAI", user, screenname).catch(function (err) {
         return console.error(err.toString());
     });
@@ -530,6 +651,7 @@ function initButtonRow() {
     var pepper = document.querySelector('.pepper').id
     var jam = document.querySelector('.jam').id
 
+    //up vote
     var col1 = document.querySelector('.response-column1');
     col1.onclick = function () {
         loginNotification();
@@ -540,7 +662,7 @@ function initButtonRow() {
         var voteTypeOut = "Up";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
-        var messageIdOut = col1.id;
+        const messageIdOut = col1.id.toString();
         var screenNameOut = screenname;
 
 
@@ -548,7 +670,7 @@ function initButtonRow() {
             return console.error(err.toString());
         });
     }
-
+    //down vote
     var col2 = document.querySelector('.response-column2');
     col2.onclick = function () {
         loginNotification();
@@ -560,7 +682,7 @@ function initButtonRow() {
         var voteTypeOut = "Down";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
-        var messageIdOut = col2.id;
+        const messageIdOut = col2.id.toString();
         var screenNameOut = screenname;
 
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
@@ -568,7 +690,7 @@ function initButtonRow() {
         });
 
     }
-
+    //star vote
     var col3 = document.querySelector('.response-column3');
     col3.onclick = function () {
         loginNotification();
@@ -580,14 +702,14 @@ function initButtonRow() {
         var voteTypeOut = "Star";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
-        var messageIdOut = col3.id;
+        const messageIdOut = col3.id.toString();
         var screenNameOut = screenname;
-        connection = this.connection;
+
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
             return console.error(err.toString());
         });
     }
-
+    //flag vote
     var col4 = document.querySelector('.response-column4');
     col4.onclick = function () {
         loginNotification();
@@ -599,7 +721,7 @@ function initButtonRow() {
         var voteTypeOut = "Flag";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
-        var messageIdOut = col4.id;
+        const messageIdOut = col4.id.toString();
         var screenNameOut = screenname;
 
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
@@ -609,11 +731,11 @@ function initButtonRow() {
 
     // Toast functions
     function loginNotification() {
-        var element = document.querySelector(".jam").id;
+        var element = document.querySelector(".screenname").id;
         if (element == 'Anonymous') {
             $.toast({
                 heading: 'Login Required',
-                text: 'It is required that you create an account and login to vote',
+                text: 'Login required to vote',
                 icon: 'info',
                 loader: true,
                 stack: 4,
@@ -623,7 +745,7 @@ function initButtonRow() {
         } else {
             $.toast({
                 heading: 'Submitted',
-                text: 'Success! Note: Only one vote per user, per post will be counted.',
+                text: 'Note: Only one vote per user will be retained.',
                 icon: 'success',
                 loader: true,
                 stack: 4,
@@ -727,10 +849,6 @@ function showIO() {
     contents[4].classList.add('hide_textarea');
     contents[0].classList.add('active');
 }
-
-
-
-
 
 //tabs handling
 const tabs = document.querySelectorAll('.tab');

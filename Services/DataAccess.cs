@@ -118,6 +118,7 @@ public class DataAccess
                 return foundPostsList;
             }
             reader1.Close();
+
             conn1.Close();
         } catch (Exception ex)
         {
@@ -461,26 +462,25 @@ public class DataAccess
         int? downVoted = 0;
         int? starVoted = 0;
         int? flagged = 0;
-        List<VoteModel> foundVotes = new List<VoteModel>();
-        foundVotes = GetPostVotesTally(postRefNumIn);
+        List<VoteModel> foundVotes = GetPostVotesTally(postRefNumIn);
         VoteTallyModel returnTally = new VoteTallyModel();
-        for(int i = 0; i > foundVotes.Count - 1; i++)
+        for(int i = 0; i < foundVotes.Count; i++)
         {
             if (foundVotes[i].UpVoted == "1")
             {
-                upVoted += 1;
-            }
+                upVoted = upVoted + 1;
+            } else
             if (foundVotes[i].DownVoted == "1")
             {
-                downVoted += 1;
-            }
+                downVoted = downVoted + 1;
+            } else
             if (foundVotes[i].StarVoted == "1")
             {
-                starVoted += 1;
-            }
+                starVoted = starVoted + 1;
+            } else
             if (foundVotes[i].Flagged == "1")
             {
-                flagged += 1;
+                flagged = flagged + 1;
             }
         }
         returnTally.PostRefNum = postRefNumIn;
@@ -822,5 +822,34 @@ public class DataAccess
             Console.WriteLine(ex.ToString());
         }
         return returnString;
+    }
+    //checks to see if a user has favorited a post and returns true if they have
+    public bool CheckFavorite(string postRefIn, string userIdIn)
+    {
+        bool answere = false;
+        string userIdNormalized = userIdIn.ToUpper();
+        //delete from FavoritesModel table
+        try
+        {
+            MySqlConnection conn1 = new MySqlConnection(connectionString);
+            conn1.Open();
+            string sqlFavString = "SELECT * FROM gcai.FavoritesModel WHERE idPostModel = @PostRefNum AND UserID = @UserId";
+            MySqlCommand cmd4 = new MySqlCommand(sqlFavString, conn1);
+            cmd4.Parameters.AddWithValue("@PostRefNum", postRefIn);
+            cmd4.Parameters.AddWithValue("@UserId", userIdNormalized);
+            MySqlDataReader reader1 = cmd4.ExecuteReader();
+            while (reader1.Read())
+            {
+                if (reader1.GetValue(0).Equals(postRefIn)) { answere = true; } else { }
+            }
+
+            conn1.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return answere;
     }
 }

@@ -10,6 +10,7 @@
 a {
     text-decoration: none !important;
     color: #ffead7;
+    
 }
 
 .home-campaign-lines-hero-container {
@@ -1037,6 +1038,27 @@ th{
 .total-contributions {
     color: rgb(255,234,215,.9) !important;
 }
+.vote-count {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 22.5px;
+    width: auto;
+    padding-left: 2.5px;
+    padding-right: 2.5px;
+    justify-items: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: #ffead7;
+    background: #0d1725aa;
+    border-color: black;
+    opacity: .65;
+    position: relative;
+    left: -15px;
+    top: -5px;
+}
 
 .message-row {
     display: flex;
@@ -1400,15 +1422,27 @@ th{
 /*----end tooltips-------*/
 
 .filter-red {
-    filter: invert(35%) sepia(10%) saturate(3253%) hue-rotate(322deg) brightness(90%) contrast(91%);
+    filter: invert(35%) sepia(10%) saturate(3253%) hue-rotate(322deg) brightness(70%) contrast(60%);
 }
 .filter-gold {
-    filter: invert(100%) sepia(44%) saturate(2678%) hue-rotate(320deg) brightness(106%) contrast(102%);
+    filter: invert(100%) sepia(44%) saturate(2678%) hue-rotate(320deg) brightness(70%) contrast(60%);
 }
 .filter-green {
-    filter: invert(96%) sepia(98%) saturate(5535%) hue-rotate(67deg) brightness(103%) contrast(93%);
+    filter: invert(96%) sepia(98%) saturate(5535%) hue-rotate(67deg) brightness(60%) contrast(40%);
+}
+.filter-red:hover {
+    filter: invert(35%) sepia(10%) saturate(3253%) hue-rotate(322deg) brightness(85%) contrast(85%);
+    transition: ease-in-out;
+}
+.filter-gold:hover {
+    filter: invert(100%) sepia(44%) saturate(2678%) hue-rotate(320deg) brightness(85%) contrast(95%);
+    transition: ease-in-out;
 }
 
+.filter-green:hover {
+    filter: invert(96%) sepia(98%) saturate(5535%) hue-rotate(67deg) brightness(65%) contrast(65%);
+    transition: ease-in-out;
+}
 .avatar-img {
     color: red;
     fill: currentColor;
@@ -1435,11 +1469,13 @@ th{
     display: inline-block;
     width: 25px;
     height: 25px;
+    transform: scale(1.15)
 }
 .report-img {
     display: inline-block;
     width: 25px;
     height: 25px;
+    transform: scale(1.25)
 }
 .padding-right-5{
     padding-right: 5px;

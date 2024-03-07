@@ -7,48 +7,67 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using gcai.Migrations;
+using Microsoft.CodeAnalysis;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace gcio.Hubs
 {
     public class PostHub : Hub
     {
-        public async Task SendMessages(int startPostNum, int endPostNum)
+        public async Task SendMessages(int startPostNum, int endPostNum, string user)
         {
             string connectionId = Context.ConnectionId;
             List<PostModel> foundPosts = new List<PostModel>();
             DataAccess data = new DataAccess();
             foundPosts = data.GetUserPosts(startPostNum, endPostNum); //the number of posts for display
+            string userIn = user;
 
             for (int i = foundPosts.Count - 1; i >= 0; i--)
             {
+
                 if (foundPosts[i].PostType == "Truth")
                 {
                     string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
-                    await SendTruthInit(foundPosts[i].UserId, foundPosts[i].Truth, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal);
+                    bool isFavorite = data.CheckFavorite(foundPosts[i].idPostModel, user);
+                    string? favorite = "0";
+                    if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+                    await SendTruthInit(foundPosts[i].UserId, foundPosts[i].Truth, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal, postVotesTally.UpVotedTotal.ToString(), postVotesTally.DownVotedTotal.ToString(), favorite, postVotesTally.UpVotedTotal.ToString());
                 }
                 if (foundPosts[i].PostType == "Humor")
                 {
                     string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
-                    await SendHumorInit(foundPosts[i].UserId, foundPosts[i].Humor, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal);
+                    bool isFavorite = data.CheckFavorite(foundPosts[i].idPostModel,user);
+                    string? favorite = "0";
+                    if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+                    await SendHumorInit(foundPosts[i].UserId, foundPosts[i].Humor, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal, postVotesTally.UpVotedTotal.ToString(), postVotesTally.DownVotedTotal.ToString(), favorite, postVotesTally.UpVotedTotal.ToString());
                 }
                 if (foundPosts[i].PostType == "Problem/Solution")
                 {
                     string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
-                    await SendProbSolInit(foundPosts[i].UserId, foundPosts[i].Problem, foundPosts[i].Solution, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal);
+                    bool isFavorite = data.CheckFavorite(foundPosts[i].idPostModel, user);
+                    string? favorite = "0";
+                    if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+
+                    await SendProbSolInit(foundPosts[i].UserId, foundPosts[i].Problem, foundPosts[i].Solution, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal, postVotesTally.UpVotedTotal.ToString(), postVotesTally.DownVotedTotal.ToString(), favorite, postVotesTally.UpVotedTotal.ToString());
+                    
                 }
             }
         }
-        public async Task SendTruthInit(string user, string message, string id, string screenname, string posterContributionsTotal)
+        public async Task SendTruthInit(string user, string message, string id, string screenname, string posterContributionsTotal, string qty_upvoted, string qty_downvoted, string qty_starvoted, string qty_flagvoted)
         {
-            await Clients.All.SendAsync("ReceiveMessageTruth", user, message, id, screenname, posterContributionsTotal);
+            await Clients.All.SendAsync("ReceiveMessageTruth", user, message, id, screenname, posterContributionsTotal, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted);
         }
-        public async Task SendHumorInit(string user, string message, string id, string screenname, string posterContributionsTotal)
+        public async Task SendHumorInit(string user, string message, string id, string screenname, string posterContributionsTotal, string qty_upvoted, string qty_downvoted, string qty_starvoted, string qty_flagvoted)
         {
-            await Clients.All.SendAsync("ReceiveMessageHumor", user, message, id, screenname, posterContributionsTotal);
+            await Clients.All.SendAsync("ReceiveMessageHumor", user, message, id, screenname, posterContributionsTotal, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted);
         }
-        public async Task SendProbSolInit(string user, string problem, string solution, string id, string screenname, string posterContributionsTotal)
+        public async Task SendProbSolInit(string user, string problem, string solution, string id, string screenname, string posterContributionsTotal, string qty_upvoted, string qty_downvoted, string qty_starvoted, string qty_flagvoted)
         {
-            await Clients.All.SendAsync("ReceiveMessageProblemSolution", user, problem, solution, id, screenname, posterContributionsTotal);
+            await Clients.All.SendAsync("ReceiveMessageProblemSolution", user, problem, solution, id, screenname, posterContributionsTotal, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted);
         }
         //sends indevidual message to all clients
         public async Task SendMessageTruth(string user, string message, string id, string screenname)
@@ -72,7 +91,14 @@ namespace gcio.Hubs
             
             post = toPost.PutNewPost(postModel);
             string? totalUserContributions = toPost.GetUserContributions(user);
-            await Clients.All.SendAsync("ReceiveMessageTruth", user, message, post.idPostModel, post.ScreenName, totalUserContributions);
+
+            DataAccess data = new DataAccess();         
+            bool isFavorite = data.CheckFavorite(post.idPostModel, user);
+            string? favorite = "0";
+            if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+            VoteTallyModel postVotesTally = data.tallyPostVotes(post.idPostModel);
+
+            await Clients.All.SendAsync("ReceiveMessageTruth", user, message, post.idPostModel, post.ScreenName, totalUserContributions, postVotesTally.UpVotedTotal, postVotesTally.DownVotedTotal, postVotesTally.StarVotedTotal, postVotesTally.FlaggedTotal);
         }
         //sends indevidual message to all clients
         public async Task SendMessageHumor(string user, string message, string id, string screenname)
@@ -97,7 +123,14 @@ namespace gcio.Hubs
             postModel.ScreenName = screenname;
             post = toPost.PutNewPost(postModel);
             string? totalUserContributions = toPost.GetUserContributions(user);
-            await Clients.All.SendAsync("ReceiveMessageHumor", user, message, post.idPostModel, post.ScreenName, totalUserContributions);
+
+            DataAccess data = new DataAccess();
+            bool isFavorite = data.CheckFavorite(post.idPostModel, user);
+            string? favorite = "0";
+            if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+            VoteTallyModel postVotesTally = data.tallyPostVotes(post.idPostModel);
+
+            await Clients.All.SendAsync("ReceiveMessageHumor", user, message, post.idPostModel, post.ScreenName, totalUserContributions, postVotesTally.UpVotedTotal, postVotesTally.DownVotedTotal, postVotesTally.StarVotedTotal, postVotesTally.FlaggedTotal);
         }
         //sends indevidual message to all clients
         public async Task SendMessageProblemSolution(string user, string problem, string solution, string id, string screenname)
@@ -123,7 +156,12 @@ namespace gcio.Hubs
             postModel.ScreenName = screenname;
             post = toPost.PutNewPost(postModel);
             string? totalUserContributions = toPost.GetUserContributions(user);
-            await Clients.All.SendAsync("ReceiveMessageProblemSolution", user, problem, solution, post.idPostModel, post.ScreenName, totalUserContributions);
+            DataAccess data = new DataAccess();
+            bool isFavorite = data.CheckFavorite(post.idPostModel, user);
+            string? favorite = "0";
+            if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
+            VoteTallyModel postVotesTally = data.tallyPostVotes(post.idPostModel);
+            await Clients.All.SendAsync("ReceiveMessageProblemSolution", user, problem, solution, post.idPostModel, post.ScreenName, totalUserContributions, postVotesTally.UpVotedTotal, postVotesTally.DownVotedTotal, postVotesTally.StarVotedTotal, postVotesTally.FlaggedTotal);
         }
         //AI Proccess //sends indevidual message to all clients
         public async Task ProccessAI(string user, string queryAI, string id, string screenname)
@@ -155,6 +193,7 @@ namespace gcio.Hubs
         //Take in vote
         public async Task CastVote(string voteTypeIn, string pepperIn, string userNameIn, string messageIdIn, string screenname)
         {
+
             DataAccess vote = new DataAccess();
             if (vote.ValidatePepper(userNameIn, pepperIn))//Checks to make sure user is an authenticated user.
             {
@@ -171,17 +210,13 @@ namespace gcio.Hubs
                 } else if (voteTypeIn == "Star"){
                     voteModel.StarVoted = "1";
                 } else{
-                    voteModel.Flagged = "1";}
+                    voteModel.Flagged = "1";
+                }
                 voteModel.DateVoted = DateTime.Now.ToString("MM-dd-yyy");
                 voteModel.ScreenName = screenname;
                 PostModel postModel = new PostModel();
                 postModel = await vote.PutNewVote(voteModel);
-                //update tally
-                if(userNameIn != "anonymous@magandigi.com")
-                {
-                    string? totalUserContributions = vote.GetUserContributions(userNameIn);
-                    await Clients.All.SendAsync("UpdateContributions", userNameIn, totalUserContributions);
-                }
+
             }
             else
             {
