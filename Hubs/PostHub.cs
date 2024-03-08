@@ -52,7 +52,7 @@ namespace gcio.Hubs
                     if (isFavorite) { favorite = "*"; } else { favorite = "0"; }
                     VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
 
-                    await SendProbSolInit(foundPosts[i].UserId, foundPosts[i].Problem, foundPosts[i].Solution, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal, postVotesTally.UpVotedTotal.ToString(), postVotesTally.DownVotedTotal.ToString(), favorite, postVotesTally.UpVotedTotal.ToString());
+                    await SendProbSolInit(foundPosts[i].UserId, foundPosts[i].Problem, foundPosts[i].Solution, foundPosts[i].idPostModel, foundPosts[i].ScreenName, posterContributionsTotal, postVotesTally.UpVotedTotal.ToString(), postVotesTally.DownVotedTotal.ToString(), favorite, postVotesTally.FlaggedTotal.ToString());
                     
                 }
             }

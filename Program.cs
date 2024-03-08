@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Builder;
 using gcai.Areas.Identity.Services;
 using gcia.Areas.Identity.Services;
+using Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -29,6 +30,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardLimit = 2;
     options.KnownProxies.Add(IPAddress.Parse("127.0.0.1")); //reverse proxy, Kestrel defaults to port 5000 which is also set in apsettings.json
     options.KnownProxies.Add(IPAddress.Parse("162.205.232.101")); //server IP public
+    
 });
 Environment.SetEnvironmentVariable("ASPNETCORE_FORWARDEDHEADERS_ENABLED", "true");
 //configure listen protocals and assert SSL/TLS requirement
@@ -72,6 +74,8 @@ builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
 });
+
+
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -126,6 +130,9 @@ app.UseEndpoints(endpoints =>
 app.UseResponseCompression();
 //app.UseHsts();
 app.UseStaticFiles();
+//required for same site cookies
+app.UseCookiePolicy();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

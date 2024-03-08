@@ -7,6 +7,7 @@ document.getElementById("userInput").value = "Anonymous";
 document.getElementById("userInput").disabled = true;
 
 
+
 //this starts the indicator that the backend system is processing.
 function startSpin() {
     const spinnerClass = document.querySelectorAll('.spinner');
@@ -55,7 +56,6 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     var span1 = document.createElement('span');
     span1.textContent = `${screenname}`;
     div11.appendChild(span1);
-
     var div15 = document.createElement("div");
     div15.classList.add("user-info-container");
     div10.appendChild(div15);
@@ -63,14 +63,11 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div12.classList.add("avatar-row-user-count");
     div12.textContent = `${contributions}`;
     div12.classList.add('padding-right-5');
-
     if (screenname == loggedInScreename) {
         div12.classList.add("total-contributions");
         updateTotalCounts(contributions);
     }
     div15.appendChild(div12);
-
-
     var div16 = document.createElement("div");
     div16.classList.add("material-symbols-outlined");
     div16.classList.add("avatar-row-user-badge");
@@ -99,41 +96,29 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
-
-
-        var div10 = document.createElement('div');
-        div10.classList.add("vote-count");
-        var span10 = document.createElement('span');
-        span10.textContent = `${qty_upvoted}`;
-        div10.appendChild(span10);
-        div4.appendChild(div10);
-
-
-
+    var div10 = document.createElement('div');
+    div10.classList.add("vote-count");
+    var span10 = document.createElement('span');
+    span10.textContent = `${qty_upvoted}`;
+    div10.appendChild(span10);
+    div4.appendChild(div10);
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
-
-
-        var div11 = document.createElement('div');
-        div11.classList.add("vote-count");
-        var span11 = document.createElement('span');
-        span11.textContent = `${qty_downvoted}`;
-        div11.appendChild(span11);
-        div4.appendChild(div11);
-    
-
+    var div11 = document.createElement('div');
+    div11.classList.add("vote-count");
+    var span11 = document.createElement('span');
+    span11.textContent = `${qty_downvoted}`;
+    div11.appendChild(span11);
+    div4.appendChild(div11);
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
-
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
-
-    
     if (qty_starvoted == "0") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
@@ -142,22 +127,16 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
-
-
-
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
-
-        var div13 = document.createElement('div');
-        div13.classList.add("vote-count");
-        var span13 = document.createElement('span');
-        span13.textContent = `${qty_flagvoted}`;
-        div13.appendChild(span13);
-        div4.appendChild(div13);
-
-
+    var div13 = document.createElement('div');
+    div13.classList.add("vote-count");
+    var span13 = document.createElement('span');
+    span13.textContent = `${qty_flagvoted}`;
+    div13.appendChild(span13);
+    div4.appendChild(div13);
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -182,7 +161,6 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     stopSpin();
     initButtonRow();
 });
-
 
 connection.on("ReceiveMessageHumor", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
     const loggedInScreename = document.querySelector(".screenname").id;
@@ -247,35 +225,29 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
-
     var div10 = document.createElement('div');
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
     span10.textContent = `${qty_upvoted}`;
     div10.appendChild(span10);
     div4.appendChild(div10);
-
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
-
     var div11 = document.createElement('div');
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
     span11.textContent = `${qty_downvoted}`;
     div11.appendChild(span11);
     div4.appendChild(div11);
-
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
-
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
-
     if (qty_starvoted == "0") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
@@ -284,19 +256,16 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
-
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
-
     var div13 = document.createElement('div');
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
     span13.textContent = `${qty_flagvoted}`;
     div13.appendChild(span13);
     div4.appendChild(div13);
-
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -390,35 +359,29 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div5.classList.add("response-column1");
     div5.setAttribute("id", id);
     div4.appendChild(div5);
-
     var div10 = document.createElement('div');
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
     span10.textContent = `${qty_upvoted}`;
     div10.appendChild(span10);
     div4.appendChild(div10);
-
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
     div6.setAttribute("id", id);
     div4.appendChild(div6);
-
     var div11 = document.createElement('div');
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
     span11.textContent = `${qty_downvoted}`;
     div11.appendChild(span11);
     div4.appendChild(div11);
-
     var div7 = document.createElement('div');
     div7.classList.add("response-column5");
     div4.appendChild(div7);
-
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
     div8.setAttribute("id", id);
     div4.appendChild(div8);
-
     if (qty_starvoted == "0") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
@@ -427,19 +390,16 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
-
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
     div9.setAttribute("id", id);
     div4.appendChild(div9);
-
     var div13 = document.createElement('div');
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
     span13.textContent = `${qty_flagvoted}`;
     div13.appendChild(span13);
     div4.appendChild(div13);
-
     var img2 = document.createElement('img')
     img2.classList.add('thumbs-up-img');
     img2.classList.add('filter-green');
@@ -504,7 +464,7 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     div2.appendChild(div4);
     var div5 = document.createElement('div');
     div5.classList.add("ai-response-column1");
-    div5.setAttribute("id", id);
+    div5.setAttribute("id", 'aiThumbsUp');
     div4.appendChild(div5);
     var div6 = document.createElement('div');
     div6.classList.add("ai-response-column2");
@@ -544,7 +504,35 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     document.getElementById("insert-ai-response").prepend(div2);
     stopSpin();
     initButtonRow();
+
+    //the following must load at the end of this code block after the response columns are in the dom
+    var thumbsUp = document.querySelector('.ai-response-column1');
+    var thumbsDown = document.querySelector('.ai-response-column2');
+    var flag = document.querySelector('.ai-response-column4');
+    thumbsUp.addEventListener('click', function () {
+        aiFeedbackNotification();
+    });
+    thumbsDown.addEventListener('click', function () {
+        aiFeedbackNotification();
+    });
+    flag.addEventListener('click', function () {
+        aiFeedbackNotification();
+    });
+
 });
+
+function aiFeedbackNotification() {
+    $.toast({
+        text: 'The spriit of the collective solutes you!',
+        icon: 'info',
+        loader: true,
+        stack: 4,
+        position: 'bottom-center',
+        hideAfter: 5000,
+    })
+}
+
+
 //update contributions when current user casts a vote
 connection.on("UpdateContributions", function (user, updatedContributions) {
     var currentUser = document.querySelector('.jam').id;
@@ -559,15 +547,14 @@ connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     let starting = 0;
     let ending = 10;
-   
+    
     /*document.getElementById("testid").scrollIntoView();*/
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
 
     connection.invoke("SendMessages", starting, ending, user);
-    connection.invoke("helloAI", user, screenname).catch(function (err) {
-        return console.error(err.toString());
-    });
+
+    onLoadAI();
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -604,33 +591,16 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
     eraseText();
 });
-function aiNotification() {
 
-    /*    $.toast({
-            text: 'Check with your local AA group, sponsor, and or a healthcare professional before making use of any information you find here. This website generates responses based on mathmatical probabilities and is not a replacement for good human judgement.',
-            heading: 'Warning',
-            showHideTransition: 'slide',
-            hideAfter: 6000,
-            position: 'bottom-center',
-            icon: 'warning',
-            allowToastClose: true,
-        })*/
-    /*    $.toast({
-            text: 'Please be patient!',
-            heading: 'Thinking through it now....',
-            showHideTransition: 'slide',
-            hideAfter: 3000,
-            position: 'bottom-center',
-    
-        })*/
-}
+
+
 document.getElementById("sendButton2").addEventListener("click", function (event) {
     
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     const tabs = document.querySelectorAll('.tab');
     startSpin();
-    aiNotification();
+    
     console.log('Should be spinning');
     if (tabs[3].classList.contains('active')) {
         document.getElementById("testid").scrollIntoView();
@@ -643,6 +613,22 @@ document.getElementById("sendButton2").addEventListener("click", function (event
 
     event.preventDefault();
     eraseText();
+});
+
+const select_io = document.querySelector('.angled-left');
+const select_ai = document.querySelector('.angled-right');
+select_io.addEventListener('click', function () {
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    if (document.getElementById('bopis').checked == false) {
+        toggle_button.click();
+    }
+});
+select_ai.addEventListener('click', function () {
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+
+    if (document.getElementById('bopis').checked == true) {
+        toggle_button.click();
+    }
 });
 
 //post response buttons
@@ -754,8 +740,8 @@ function initButtonRow() {
             })
         }
     }
-    let user = document.querySelector('.username').id;
 
+    let user = document.querySelector('.username').id;
     var aiResponse = document.querySelector(".ai-response");
     $(aiResponse).typewrite({
         'delay': 25, //time in ms between each letter
@@ -814,26 +800,7 @@ function revealAIMessages() {
     invokeIAHello();
 }
 const messageInputAI = document.querySelectorAll('.messageInputAI');
-function showAI() {
-    hideAIResponses();
-    hidePostMessages();
-    revealAIMessages();
-    indicators.forEach(indicator => { indicator.classList.remove('active') });
-    indicators[3].classList.add('active');
 
-    messageInputAI.forEach(elem => { elem.classList.remove('hide_textarea') });
-
-
-    contents.forEach(content => { content.classList.remove('active') });
-    contents.forEach(content => { content.classList.remove('hide_textarea') });
-    contents[0].classList.add('hide_textarea');
-    contents[1].classList.add('hide_textarea');
-    contents[2].classList.add('hide_textarea');
-    contents[3].classList.add('hide_textarea');
-    contents[4].classList.add('active');
-    tabs[3].classList.add('active');
-
-}
 function showIO() {
 
     hideAIMessages();
@@ -985,6 +952,25 @@ toggle_button.addEventListener('click', function () {
 });
 //end card flip
 
+function showAI() {
+    hideAIResponses();
+    hidePostMessages();
+    revealAIMessages();
+    indicators.forEach(indicator => { indicator.classList.remove('active') });
+    indicators[3].classList.add('active');
+
+    messageInputAI.forEach(elem => { elem.classList.remove('hide_textarea') });
+
+    contents.forEach(content => { content.classList.remove('active') });
+    contents.forEach(content => { content.classList.remove('hide_textarea') });
+    contents[0].classList.add('hide_textarea');
+    contents[1].classList.add('hide_textarea');
+    contents[2].classList.add('hide_textarea');
+    contents[3].classList.add('hide_textarea');
+    contents[4].classList.add('active');
+    tabs[3].classList.add('active');
+
+}
 function onLoadAI() {
     eraseText();
     if (card.classList.contains('is--flipped')) {
@@ -998,22 +984,11 @@ function onLoadAI() {
         document.getElementById("bopis").checked = false;
         showAI();
     }
+
 }
 
-const select_io = document.querySelector('.angled-left');
-const select_ai = document.querySelector('.angled-right');
-select_io.addEventListener('click', function () {
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
-    if (document.getElementById('bopis').checked == false) {
-        toggle_button.click();
-    }
-});
-select_ai.addEventListener('click', function () {
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
-    
-    if (document.getElementById('bopis').checked == true) {
-        toggle_button.click();
-    }
-});
 
-onLoadAI();
+
+
+
+
