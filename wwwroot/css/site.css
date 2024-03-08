@@ -201,6 +201,8 @@ body {
     flex-direction: column;
     max-height: 0px;
 
+
+
 }
 .banner-text-row {
     display: flex;
@@ -218,7 +220,15 @@ body {
     color: #ffefd3;
     -webkit-text-stroke: .5px #587b9a;
     text-shadow: 0px 4px 4px #0d1725;
+/*    animation: fade-out linear;
+    animation-timeline: view();
+    animation-range: exit -200px;
+    border: 2px yellow solid;*/
 }
+/*@keyframes fade-out{
+    to {opacity:0;}
+}*/
+
 .border-bottom {
     border-bottom: 1px solid #0d1725 !important;
 }

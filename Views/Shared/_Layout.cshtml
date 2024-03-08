@@ -14,11 +14,13 @@
     <meta property="og:url" content="https://groupconscience.ai/" />
     <meta property="og:site_name" content="GroupConscience.ai" />
     <title>@ViewData["Title"]</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="~/css/spinkit.css">
     <link rel="stylesheet" type="text/css" href="~/css/jquery.toast.css">
     <link rel="icon" href="/android-chrome-192x192.png">
+    
 </head>
 
 <body>
@@ -66,11 +68,13 @@
         <a asp-area="" asp-controller="Home" asp-action="Terms">Terms</a>
     </div>
 </footer>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/jquery.toast.js"></script>
 <script src="~/js/jquerytypewriter.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
 
 @await RenderSectionAsync("Scripts", required: false)
