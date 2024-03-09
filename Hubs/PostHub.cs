@@ -227,8 +227,8 @@ namespace gcio.Hubs
         //Take in vote
         public async Task helloAI(string userIdIn, string screennameIn)
         {
-            string prompt = "Hello???";
-            string answer = "Hello there! *smiles* My name is Alex A.I.  My primary aim is to help by answering any questions you have about recovery from alcoholism. It's great that you're reaching out for guidance on your journey. Please feel free to ask me anything and I will do my best to provide you with helpful and accurate information based on Alcoholics Anonymous literature and what has been shared by our members. Please remember to check with your local AA group, sponsor, and or a healthcare professional regarding the information that I provide. You can be sure that I do make mistakes.";
+            string prompt = "Hello AI!";
+            string answer = "Hello there! *smiles* My name is Alex AI.  My primary aim is to help by answering any questions you have about recovery from alcoholism. It's great that you're reaching out for guidance on your journey. Please feel free to ask me anything and I will do my best to provide you with helpful and accurate information based on Alcoholics Anonymous literature and what has been shared by our members. Please remember to check with your local AA group, sponsor, and healthcare professional regarding the information that I provide. I do make mistakes.";
             string id = "001";
 
             await Clients.All.SendAsync("ReceiveAIResponse", userIdIn, prompt, answer, id, screennameIn);

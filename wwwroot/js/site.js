@@ -38,11 +38,11 @@ function eraseText() {
 }
 //inbound message handling
 connection.on("ReceiveMessageTruth", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
+    const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
-    div2.id = id;
-    const loggedInScreename = document.querySelector(".screenname").id;
+    div2.classList.add(id);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -77,18 +77,31 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div13.classList.add("avatar-column");
     div3.appendChild(div13);
     var img1 = document.createElement('img');
+    var div13 = document.createElement("div");
+    div13.classList.add("avatar-column");
+    div3.appendChild(div13);
+    var img1 = document.createElement('img');
     img1.classList.add('avatar-img');
     img1.src = "/img/user-avatar-filled.svg";
     div13.appendChild(img1);
+    var div14 = document.createElement("div");
+    div14.classList.add('message-colum');
+    div2.appendChild(div14);
     var div4 = document.createElement("div");
     div4.classList.add('message-row');
-    div2.appendChild(div4);
+    div14.appendChild(div4);
     var h3 = document.createElement("h3");
-    h3.textContent = `A Members Truth:`;
+    h3.classList.add('message-h3-heading');
+    h3.textContent = `Truth:`;
     div4.appendChild(h3);
+    var div16 = document.createElement("div");
+    div16.classList.add('message-row');
+    div2.appendChild(div16);
     var p = document.createElement("p");
+    p.classList.add('member-question');
+    p.classList.add('message-paragraph');
     p.textContent = `${message}`;
-    h3.appendChild(p);
+    div16.appendChild(p);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
@@ -152,7 +165,7 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     img4.classList.add('filter-gold');
     img4.src = "/img/star.svg";
     div8.appendChild(img4);
-    var img5 = document.createElement('img');
+    var img5 = document.createElement('img')
     img5.classList.add('report-img');
     img5.classList.add('filter-red');
     img5.src = "/img/report.svg";
@@ -183,7 +196,7 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div11.appendChild(span1);
     var div15 = document.createElement("div");
     div15.classList.add("user-info-container");
-    div10.appendChild(div15)
+    div10.appendChild(div15);
     var div12 = document.createElement("div");
     div12.classList.add("avatar-row-user-count");
     div12.textContent = `${contributions}`;
@@ -209,15 +222,24 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     img1.classList.add('avatar-img');
     img1.src = "/img/user-avatar-filled.svg";
     div13.appendChild(img1);
+    var div14 = document.createElement("div");
+    div14.classList.add('message-colum');
+    div2.appendChild(div14);
     var div4 = document.createElement("div");
     div4.classList.add('message-row');
-    div2.appendChild(div4);
+    div14.appendChild(div4);
     var h3 = document.createElement("h3");
-    h3.textContent = `A Members Humor:`;
+    h3.classList.add('message-h3-heading');
+    h3.textContent = `Humor:`;
     div4.appendChild(h3);
+    var div16 = document.createElement("div");
+    div16.classList.add('message-row');
+    div2.appendChild(div16);
     var p = document.createElement("p");
+    p.classList.add('member-question');
+    p.classList.add('message-paragraph');
     p.textContent = `${message}`;
-    h3.appendChild(p);
+    div16.appendChild(p);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
@@ -337,21 +359,39 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     img1.classList.add('avatar-img');
     img1.src = "/img/user-avatar-filled.svg";
     div13.appendChild(img1);
+    var div14 = document.createElement("div");
+    div14.classList.add('message-colum');
+    div2.appendChild(div14);
     var div4 = document.createElement("div");
     div4.classList.add('message-row');
-    div2.appendChild(div4);
+    div14.appendChild(div4);
     var h3 = document.createElement("h3");
-    h3.textContent = `A Members Question:`;
+    h3.classList.add('message-h3-heading');
+    h3.textContent = `Question:`;
     div4.appendChild(h3);
+    var div16 = document.createElement("div");
+    div16.classList.add('message-row');
+    div2.appendChild(div16);
     var p = document.createElement("p");
+    p.classList.add('member-question');
+    p.classList.add('message-paragraph');
     p.textContent = `${problem}`;
-    h3.appendChild(p);
-    var h32 = document.createElement("h3");
-    h32.textContent = `This Members Answer:`;
-    h3.appendChild(h32);
+    div16.appendChild(p);    
+    var div17 = document.createElement("div");
+    div17.classList.add('message-row');
+    div2.appendChild(div17);
+    var h3b = document.createElement("h3");
+    h3b.classList.add('message-h3-heading');
+    h3b.textContent = `Answer:`;
+    div17.appendChild(h3b);
+    var div18 = document.createElement("div");
+    div18.classList.add('message-row');
+    div2.appendChild(div18);
     var p2 = document.createElement("p");
+    p2.classList.add('member-question');
+    p2.classList.add('message-paragraph');
     p2.textContent = `${solution}`;
-    h3.appendChild(p2);
+    div18.appendChild(p2);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
@@ -426,7 +466,6 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
 });
 
 connection.on("ReceiveAIResponse", function (user, query, response, id, screenname) {
-
     document.getElementById("insert-ai-response").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("ai-message-container");
@@ -442,23 +481,40 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     img1.classList.add('avatar-img');
     img1.src = "/img/user-avatar-filled.svg";
     div3.appendChild(img1);
+    var div14 = document.createElement("div");
+    div14.classList.add('message-colum');
+    div2.appendChild(div14);
     var div4 = document.createElement("div");
     div4.classList.add('message-row');
-    div2.appendChild(div4);
+    div14.appendChild(div4);
     var h3 = document.createElement("h3");
+    h3.classList.add('message-h3-heading');
     h3.textContent = `Question:`;
     div4.appendChild(h3);
+    var div16 = document.createElement("div");
+    div16.classList.add('message-row');
+    div2.appendChild(div16);
     var p = document.createElement("p");
+    p.classList.add('member-question');
+    p.classList.add('message-paragraph');
     p.textContent = `${query}`;
-    h3.appendChild(p);
-    var h32 = document.createElement("h3");
-    h32.textContent = `Response:`;
-    h3.appendChild(h32);
+    div16.appendChild(p);
+    var div17 = document.createElement("div");
+    div17.classList.add('message-row');
+    div2.appendChild(div17);
+    var h3b = document.createElement("h3");
+    h3b.classList.add('message-h3-heading');
+    h3b.textContent = `Response:`;
+    div17.appendChild(h3b);
+    var div18 = document.createElement("div");
+    div18.classList.add('message-row');
+    div2.appendChild(div18);
     var p2 = document.createElement("p");
+    p2.classList.add('member-question'); 
+    p2.classList.add('message-paragraph');
     p2.classList.add('ai-response');
-    p2.id = "ai-response";
     p2.textContent = `${response}`;
-    h3.appendChild(p2);
+    div18.appendChild(p2);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
@@ -491,11 +547,7 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     img3.classList.add('filter-red');
     img3.src = "/img/thumbs-down.svg";
     div6.appendChild(img3);
-    /*    var img4 = document.createElement('img')
-        img4.classList.add('star');
-        img4.classList.add('filter-gold');
-        img4.src = "/img/star.svg";
-        div8.appendChild(img4);*/
+    var img4 = document.createElement('img')
     var img5 = document.createElement('img')
     img5.classList.add('report-img');
     img5.classList.add('filter-red');
@@ -504,7 +556,6 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     document.getElementById("insert-ai-response").prepend(div2);
     stopSpin();
     initButtonRow();
-
     //the following must load at the end of this code block after the response columns are in the dom
     var thumbsUp = document.querySelector('.ai-response-column1');
     var thumbsDown = document.querySelector('.ai-response-column2');
@@ -518,12 +569,10 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
     flag.addEventListener('click', function () {
         aiFeedbackNotification();
     });
-
 });
-
 function aiFeedbackNotification() {
     $.toast({
-        text: 'The spriit of the collective solutes you!',
+        text: 'The power behing the collective solutes you!',
         icon: 'info',
         loader: true,
         stack: 4,
@@ -531,8 +580,6 @@ function aiFeedbackNotification() {
         hideAfter: 5000,
     })
 }
-
-
 //update contributions when current user casts a vote
 connection.on("UpdateContributions", function (user, updatedContributions) {
     var currentUser = document.querySelector('.jam').id;
@@ -547,8 +594,6 @@ connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     let starting = 0;
     let ending = 10;
-    
-    /*document.getElementById("testid").scrollIntoView();*/
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
 
@@ -558,14 +603,11 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
-
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     const tabs = document.querySelectorAll('.tab');
     startSpin();
-
-
     if (tabs[0].classList.contains('active')) {
         var message = document.getElementById("messageInputTruth").value;
         let postId = "0";
@@ -591,9 +633,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
     eraseText();
 });
-
-
-
 document.getElementById("sendButton2").addEventListener("click", function (event) {
     
     var user = document.querySelector('.jam').id;
@@ -610,33 +649,31 @@ document.getElementById("sendButton2").addEventListener("click", function (event
             return console.error(err.toString());
         });
     }
-
     event.preventDefault();
     eraseText();
 });
-
 const select_io = document.querySelector('.angled-left');
 const select_ai = document.querySelector('.angled-right');
 select_io.addEventListener('click', function () {
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })
+    /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })*/;
+
     if (document.getElementById('bopis').checked == false) {
         toggle_button.click();
     }
 });
 select_ai.addEventListener('click', function () {
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
-
+    document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })
+   /* document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });*/
     if (document.getElementById('bopis').checked == true) {
         toggle_button.click();
     }
 });
-
 //post response buttons
 function initButtonRow() {
     var screenname = document.querySelector('.screenname').id;
     var pepper = document.querySelector('.pepper').id
     var jam = document.querySelector('.jam').id
-
     //up vote
     var col1 = document.querySelector('.response-column1');
     col1.onclick = function () {
@@ -650,8 +687,6 @@ function initButtonRow() {
         var userNameOut = jam.toString();
         const messageIdOut = col1.id.toString();
         var screenNameOut = screenname;
-
-
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
             return console.error(err.toString());
         });
@@ -674,7 +709,6 @@ function initButtonRow() {
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
             return console.error(err.toString());
         });
-
     }
     //star vote
     var col3 = document.querySelector('.response-column3');
@@ -684,13 +718,11 @@ function initButtonRow() {
         console.log(pepper.toString());
         console.log(jam.toString());
         console.log(col3.id);
-
         var voteTypeOut = "Star";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
         const messageIdOut = col3.id.toString();
         var screenNameOut = screenname;
-
         connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
             return console.error(err.toString());
         });
@@ -731,7 +763,7 @@ function initButtonRow() {
         } else {
             $.toast({
                 heading: 'Submitted',
-                text: 'Note: Only one vote per user will be retained.',
+                text: 'The power behing the collective solutes you! *Note: Only one vote per user will be retained.',
                 icon: 'success',
                 loader: true,
                 stack: 4,
@@ -744,7 +776,7 @@ function initButtonRow() {
     let user = document.querySelector('.username').id;
     var aiResponse = document.querySelector(".ai-response");
     $(aiResponse).typewrite({
-        'delay': 25, //time in ms between each letter
+        'delay': 1, //time in ms between each letter
         'extra_char': '', //"cursor" character to append after each display
         'trim': true, // Trim the string to type (Default: false, does not trim)
         'callback': null // if exists, called after all effects have finished
@@ -767,7 +799,6 @@ function invokeIAHello() {
         return console.error(err.toString());
     });
 }
-
 //make sure AI messages are hidden on page reload
 function hideAIResponsContainer() {
     const aiMessaagesClass = document.querySelectorAll('.ai-container');
@@ -800,9 +831,7 @@ function revealAIMessages() {
     invokeIAHello();
 }
 const messageInputAI = document.querySelectorAll('.messageInputAI');
-
 function showIO() {
-
     hideAIMessages();
     revealPostMessages();
     indicators.forEach(indicator => { indicator.classList.remove('active') });
@@ -816,7 +845,6 @@ function showIO() {
     contents[4].classList.add('hide_textarea');
     contents[0].classList.add('active');
 }
-
 //tabs handling
 const tabs = document.querySelectorAll('.tab');
 const indicators = document.querySelectorAll('.indicator');
@@ -888,7 +916,6 @@ tabs.forEach((tab, index) => {
     })
 })
 //end tabs
-
 //begin card flip
 document.getElementById("bopis").checked = true;
 const toggle_button = document.querySelector('.on-off-toggle__input');
@@ -900,8 +927,6 @@ var intro_io= document.getElementById('intro_io');
 intro_text.classList.add('intro-hidden');
 intro_io.classList.add('intro-hidden');
 intro_ai.classList.add('intro-un-hidden');
-
-
 toggle_button.addEventListener('click', function () {
     eraseText();
     card.classList.toggle('is--flipped');
@@ -951,7 +976,6 @@ toggle_button.addEventListener('click', function () {
     }
 });
 //end card flip
-
 function showAI() {
     hideAIResponses();
     hidePostMessages();
@@ -984,11 +1008,4 @@ function onLoadAI() {
         document.getElementById("bopis").checked = false;
         showAI();
     }
-
 }
-
-
-
-
-
-
