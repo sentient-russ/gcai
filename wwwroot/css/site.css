@@ -53,7 +53,7 @@ html {
 }
 body {
     background-image: linear-gradient(120.3deg,#bababa -50%,rgb(92, 107, 115, 1),#587b9a 150%);
-    margin-top: 75px;
+    margin-top: 88px;
     margin-bottom: 0px;
 }
 
@@ -125,13 +125,15 @@ body {
     align-items: center;
     text-decoration: none;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
     font-weight: 600;
-    color: #0a1128;
+    color: #484848;
 }
     .nav-link:hover {
         transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-        color: #bdbbb0 !important;
-        opacity: 1;
+        color: #333 !important;
+        opacity: .65;
     }
 .user-tag-row {
     display: flex;
@@ -155,7 +157,6 @@ body {
     align-items: center;
     border-radius: 5px;
     border-color: rgb(92, 107, 115, 1);
-    background-color: rgb(92, 107, 115, .55);
     margin: 5px;
     border-width: .5px;
     border-color: rgb(255,234,215, .15);
@@ -259,6 +260,7 @@ footer {
     background-color: rgb(92, 107, 115, .95);
     border-color: #333 !important;
     border-width: .5px;
+    z-index:9999;
 }
 
 .post-container {
@@ -785,6 +787,7 @@ th{
     transform: translateY(-85%);
 
 }
+
 .angled-left {
     width: 35vw;
     border: 1px solid #0d1725a7;
@@ -850,8 +853,8 @@ th{
     justify-content: center;
     text-align: center;
     font-weight: 600;
-    color: rgba(37, 50, 55, .85);
-    text-shadow: 0px 4px 4px rgb(58, 68, 73, .25);
+    color: #484848;
+    /*text-shadow: 0px 4px 4px rgb(58, 68, 73, .25);*/
     font-family: 'Taviraj', serif;
     font-size: calc(4vw);
     padding: 5px;
@@ -870,8 +873,8 @@ th{
     justify-content: center;
     text-align: center;
     font-weight: 600;
-    color: rgba(37, 50, 55, .85);
-    text-shadow: 0px 4px 4px rgb(58, 68, 73, .25);
+    color: #484848;
+    /*text-shadow: 0px 4px 4px rgb(58, 68, 73, .25);*/
     font-family: 'Taviraj', serif;
     font-size: calc(4vw);
     padding: 5px;
@@ -883,6 +886,7 @@ th{
 }
 .io-example {
     width: 30vw;
+    margin: 5px;
 }
 
 .intro-heading {
@@ -896,7 +900,6 @@ th{
     font-family: 'Taviraj', serif;
     font-size: calc(1.25em + 2.2vw);
     padding: 10px;
-    font-family: 'Taviraj', serif;
     text-align: left;
 }
 .intro-heading-ai {
