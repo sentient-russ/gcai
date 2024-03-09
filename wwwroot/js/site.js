@@ -655,16 +655,16 @@ document.getElementById("sendButton2").addEventListener("click", function (event
 const select_io = document.querySelector('.angled-left');
 const select_ai = document.querySelector('.angled-right');
 select_io.addEventListener('click', function () {
-    document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })
-    /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })*/;
+    /*document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })*/
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
 
     if (document.getElementById('bopis').checked == false) {
         toggle_button.click();
     }
 });
 select_ai.addEventListener('click', function () {
-    document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })
-   /* document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });*/
+    /*document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })*/
+    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
     if (document.getElementById('bopis').checked == true) {
         toggle_button.click();
     }
