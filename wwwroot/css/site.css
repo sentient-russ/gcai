@@ -195,16 +195,20 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    font-size: calc(2.5rem);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-size: calc(1rem + 1.5vw);
     font-weight: 800;
-    color: #bdbbb0;
     max-height: 35px;
     padding: 0;
     padding-bottom: 40px;
-    opacity: .98;
+    border-bottom: unset;
     background-color: unset;
+}
+.card-header-span {
+    color: #E2E8DD;
+    text-shadow: 0px 6px 6px rgb(58, 68, 73, .75);
+    opacity: .75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .banner-text-container {
     display: flex;
@@ -224,9 +228,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 900;
-    color: #0D0D0D;
-    /*text-shadow: 0px 6px 6px rgb(57, 71, 78, .5);*/
-    /* text-shadow: 0px 6px 6px rgb(58, 68, 73, .75);*/
+    color: #E2E8DD;
+    text-shadow: 0px 6px 6px rgb(58, 68, 73, .75);
+    opacity: .75;
 }
 
 .border-bottom {

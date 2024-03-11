@@ -36,13 +36,49 @@ function eraseText() {
     document.getElementById("messageInputSolution").value = "";
     document.getElementById("messageInputAI").value = "";
 }
-//inbound message handling
-connection.on("ReceiveMessageTruth", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
+//inbound message handling cheet sheet
+/*                    
+List Order
+[0] = PostId
+[1] = Truth
+[2] = Humor
+[3] = Problem
+[4] = Solution
+[5] = Email/Username
+[6] = ScreenName
+[7] = TotalUserContribution
+[8] = TotalPostUpVotes
+[9] = TotalPostDownVotes
+[10] = TotalPostFlags
+[11] = UserUpVoted
+[12] = UserDownVoted
+[13] = UserFavorited
+[14} = UserFlagged
+*/
+connection.on("ReceiveMessageTruth", function (postDataIn) {
+    var postData = JSON.parse(postDataIn);
+    var postId = postData[0];
+    var truth = postData[1];
+    var humor = postData[2];
+    var problem = postData[3];
+    var solution = postData[4];
+    var username = postData[5];
+    var screenname = postData[6];
+    var totalUserContributions = postData[7];
+    var totalPostUpVotes = postData[8];
+    var totalPostDownVotes = postData[9];
+    var totalPostFlags = postData[10];
+    var userUpVoted = postData[11];
+    var userDownVoted = postData[12];
+    var userFavorited = postData[13];
+    var userFlagged = postData[14];
+    console.log(postData);
+
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
-    div2.classList.add(id);
+    div2.classList.add(postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -61,11 +97,11 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div10.appendChild(div15);
     var div12 = document.createElement("div");
     div12.classList.add("avatar-row-user-count");
-    div12.textContent = `${contributions}`;
+    div12.textContent = `${totalUserContributions}`;
     div12.classList.add('padding-right-5');
     if (screenname == loggedInScreename) {
         div12.classList.add("total-contributions");
-        updateTotalCounts(contributions);
+        updateTotalCounts(totalUserContributions);
     }
     div15.appendChild(div12);
     var div16 = document.createElement("div");
@@ -100,29 +136,31 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     var p = document.createElement("p");
     p.classList.add('member-question');
     p.classList.add('message-paragraph');
-    p.textContent = `${message}`;
+    p.textContent = `${truth}`;
     div16.appendChild(p);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
     var div5 = document.createElement('div');
     div5.classList.add("response-column1");
-    div5.setAttribute("id", id);
+    if (userUpVoted.localeCompare("1") == 0) { div5.classList.add("user-voted"); }
+    div5.setAttribute("id", postId);
     div4.appendChild(div5);
     var div10 = document.createElement('div');
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
-    span10.textContent = `${qty_upvoted}`;
+    span10.textContent = `${totalPostUpVotes}`;
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
-    div6.setAttribute("id", id);
+    if (userDownVoted.localeCompare("1") == 0) { div6.classList.add("user-voted"); }
+    div6.setAttribute("id", postId);
     div4.appendChild(div6);
     var div11 = document.createElement('div');
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
-    span11.textContent = `${qty_downvoted}`;
+    span11.textContent = `${totalPostDownVotes}`;
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -130,24 +168,26 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     div4.appendChild(div7);
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
-    div8.setAttribute("id", id);
+    if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
+    div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (qty_starvoted == "0") { } else {
+    if (userFavorited != "1") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
         var span12 = document.createElement('span');
-        span12.textContent = `${qty_starvoted}`;
+        span12.textContent = "*";
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
-    div9.setAttribute("id", id);
+    if (userFlagged.localeCompare("1") == 0) { div9.classList.add("user-voted"); }
+    div9.setAttribute("id", postId);
     div4.appendChild(div9);
     var div13 = document.createElement('div');
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
-    span13.textContent = `${qty_flagvoted}`;
+    span13.textContent = `${totalPostFlags}`;
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -175,12 +215,31 @@ connection.on("ReceiveMessageTruth", function (user, message, id, screenname, co
     initButtonRow();
 });
 
-connection.on("ReceiveMessageHumor", function (user, message, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
+connection.on("ReceiveMessageHumor", function (postDataIn) {
+    var postData = JSON.parse(postDataIn);
+    
+    var postId = postData[0];
+    var truth = postData[1];
+    var humor = postData[2];
+    var problem = postData[3];
+    var solution = postData[4];
+    var username = postData[5];
+    var screenname = postData[6];
+    var totalUserContributions = postData[7];
+    var totalPostUpVotes = postData[8];
+    var totalPostDownVotes = postData[9];
+    var totalPostFlags = postData[10];
+    var userUpVoted = postData[11];
+    var userDownVoted = postData[12];
+    var userFavorited = postData[13];
+    var userFlagged = postData[14];
+    console.log(postData); //save for testing
+
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
-    div2.classList.add(id);
+    div2.classList.add(postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -199,11 +258,11 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div10.appendChild(div15);
     var div12 = document.createElement("div");
     div12.classList.add("avatar-row-user-count");
-    div12.textContent = `${contributions}`;
+    div12.textContent = `${totalUserContributions}`;
     div12.classList.add('padding-right-5');
     if (screenname == loggedInScreename) {
         div12.classList.add("total-contributions");
-        updateTotalCounts(contributions);
+        updateTotalCounts(totalUserContributions);
     }
     div15.appendChild(div12);
     var div16 = document.createElement("div");
@@ -238,29 +297,31 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     var p = document.createElement("p");
     p.classList.add('member-question');
     p.classList.add('message-paragraph');
-    p.textContent = `${message}`;
+    p.textContent = `${humor}`;
     div16.appendChild(p);
     var div4 = document.createElement('div');
     div4.classList.add('response-row');
     div2.appendChild(div4);
     var div5 = document.createElement('div');
     div5.classList.add("response-column1");
-    div5.setAttribute("id", id);
+    if (userUpVoted.localeCompare("1") == 0) { div5.classList.add("user-voted"); }
+    div5.setAttribute("id", postId);
     div4.appendChild(div5);
     var div10 = document.createElement('div');
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
-    span10.textContent = `${qty_upvoted}`;
+    span10.textContent = `${totalPostUpVotes}`;
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
-    div6.setAttribute("id", id);
+    if (userDownVoted.localeCompare("1") == 0) { div6.classList.add("user-voted"); }
+    div6.setAttribute("id", postId);
     div4.appendChild(div6);
     var div11 = document.createElement('div');
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
-    span11.textContent = `${qty_downvoted}`;
+    span11.textContent = `${totalPostDownVotes}`;
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -268,24 +329,26 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     div4.appendChild(div7);
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
-    div8.setAttribute("id", id);
+    if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
+    div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (qty_starvoted == "0") { } else {
+    if (userFavorited != "1") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
         var span12 = document.createElement('span');
-        span12.textContent = `${qty_starvoted}`;
+        span12.textContent = "*";
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
-    div9.setAttribute("id", id);
+    if (userFlagged.localeCompare("1") == 0) { div9.classList.add("user-voted"); }
+    div9.setAttribute("id", postId);
     div4.appendChild(div9);
     var div13 = document.createElement('div');
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
-    span13.textContent = `${qty_flagvoted}`;
+    span13.textContent = `${totalPostFlags}`;
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -312,12 +375,30 @@ connection.on("ReceiveMessageHumor", function (user, message, id, screenname, co
     stopSpin();
     initButtonRow();
 });
-connection.on("ReceiveMessageProblemSolution", function (user, problem, solution, id, screenname, contributions, qty_upvoted, qty_downvoted, qty_starvoted, qty_flagvoted) {
+connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
+    var postData = JSON.parse(postDataIn);
+    var postId = postData[0];
+    var truth = postData[1];
+    var humor = postData[2];
+    var problem = postData[3];
+    var solution = postData[4];
+    var username = postData[5];
+    var screenname = postData[6];
+    var totalUserContributions = postData[7];
+    var totalPostUpVotes = postData[8];
+    var totalPostDownVotes = postData[9];
+    var totalPostFlags = postData[10];
+    var userUpVoted = postData[11];
+    var userDownVoted = postData[12];
+    var userFavorited = postData[13];
+    var userFlagged = postData[14];
+    console.log(postData); //save for testing
+
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
-    div2.classList.add(id);
+    div2.classList.add(postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -336,11 +417,11 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div10.appendChild(div15);
     var div12 = document.createElement("div");
     div12.classList.add("avatar-row-user-count");
-    div12.textContent = `${contributions}`;
+    div12.textContent = `${totalUserContributions}`;
     div12.classList.add('padding-right-5');
     if (screenname == loggedInScreename) {
         div12.classList.add("total-contributions");
-        updateTotalCounts(contributions);
+        updateTotalCounts(totalUserContributions);
     }
     div15.appendChild(div12);
     var div16 = document.createElement("div");
@@ -397,22 +478,24 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div2.appendChild(div4);
     var div5 = document.createElement('div');
     div5.classList.add("response-column1");
-    div5.setAttribute("id", id);
+    if (userUpVoted.localeCompare("1") == 0) { div5.classList.add("user-voted"); }
+    div5.setAttribute("id", postId);
     div4.appendChild(div5);
     var div10 = document.createElement('div');
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
-    span10.textContent = `${qty_upvoted}`;
+    span10.textContent = `${totalPostUpVotes}`;
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
     div6.classList.add("response-column2");
-    div6.setAttribute("id", id);
+    if (userDownVoted.localeCompare("1") == 0) { div6.classList.add("user-voted"); }
+    div6.setAttribute("id", postId);
     div4.appendChild(div6);
     var div11 = document.createElement('div');
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
-    span11.textContent = `${qty_downvoted}`;
+    span11.textContent = `${totalPostDownVotes}`;
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -420,24 +503,26 @@ connection.on("ReceiveMessageProblemSolution", function (user, problem, solution
     div4.appendChild(div7);
     var div8 = document.createElement('div');
     div8.classList.add("response-column3");
-    div8.setAttribute("id", id);
+    if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
+    div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (qty_starvoted == "0") { } else {
+    if (userFavorited != "1") { } else {
         var div12 = document.createElement('div');
         div12.classList.add("vote-count");
         var span12 = document.createElement('span');
-        span12.textContent = `${qty_starvoted}`;
+        span12.textContent = "*";
         div12.appendChild(span12);
         div4.appendChild(div12);
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
-    div9.setAttribute("id", id);
+    if (userFlagged.localeCompare("1") == 0) { div9.classList.add("user-voted"); }
+    div9.setAttribute("id", postId);
     div4.appendChild(div9);
     var div13 = document.createElement('div');
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
-    span13.textContent = `${qty_flagvoted}`;
+    span13.textContent = `${totalPostFlags}`;
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -572,7 +657,7 @@ connection.on("ReceiveAIResponse", function (user, query, response, id, screenna
 });
 function aiFeedbackNotification() {
     $.toast({
-        text: 'The power behing the collective solutes you!',
+        text: 'The power behing the collective salutes you!',
         icon: 'info',
         loader: true,
         stack: 4,
@@ -763,7 +848,7 @@ function initButtonRow() {
         } else {
             $.toast({
                 heading: 'Submitted',
-                text: 'The power behing the collective solutes you! *Note: Only one vote per user will be retained.',
+                text: 'The power behing the collective salutes you! *Note: Only one vote per user will be retained.',
                 icon: 'success',
                 loader: true,
                 stack: 4,
