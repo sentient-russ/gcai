@@ -833,7 +833,7 @@ public class DataAccess
         {
             MySqlConnection conn1 = new MySqlConnection(connectionString);
             conn1.Open();
-            string sqlFavString = "SELECT * FROM gcai.FavoritesModel WHERE idPostModel = @PostRefNum AND UserID = @UserId";
+            string sqlFavString = "SELECT * FROM gcai.FavoritesModel WHERE idPostModel = @PostRefNum AND UserId = @UserId";
             MySqlCommand cmd4 = new MySqlCommand(sqlFavString, conn1);
             cmd4.Parameters.AddWithValue("@PostRefNum", postRefIn);
             cmd4.Parameters.AddWithValue("@UserId", userIdNormalized);
@@ -851,5 +851,43 @@ public class DataAccess
         }
 
         return answere;
+    }
+    //Returns a vote model with the users votes for a given post
+    public VoteModel GetUsersVotes(string postRefIn, string userIdIn)
+    {
+        VoteModel returnVote = new VoteModel();
+        List<VoteModel> votesList = new List<VoteModel>();
+        try
+        {
+            MySqlConnection conn12 = new MySqlConnection(connectionString);
+            conn12.Open();
+            string sqlFavString = "SELECT * FROM gcai.VoteModels WHERE PostRefNum = @PostRefNum AND UserId = @UserId";
+            MySqlCommand cmd12 = new MySqlCommand(sqlFavString, conn12);
+            cmd12.Parameters.AddWithValue("@PostRefNum", postRefIn);
+            cmd12.Parameters.AddWithValue("@UserId", userIdIn);
+            MySqlDataReader reader12 = cmd12.ExecuteReader();
+            while (reader12.Read())
+            {
+                
+                if (reader12.GetValue(0).Equals("")) { } else if (!reader12.GetValue(0).Equals("")) { returnVote.idVoteModel = reader12.GetValue(0).ToString(); }
+                if (reader12.GetValue(1).Equals("")) { } else if (!reader12.GetValue(1).Equals("")) { returnVote.PostRefNum = reader12.GetValue(1).ToString(); }
+                if (reader12.GetValue(2).Equals("")) { } else if (!reader12.GetValue(2).Equals("")) { returnVote.UserId = reader12.GetValue(2).ToString(); }
+                if (reader12.GetValue(3).Equals("")) { } else if (!reader12.GetValue(3).Equals("")) { returnVote.UpVoted = reader12.GetValue(3).ToString(); }
+                if (reader12.GetValue(4).Equals("")) { } else if (!reader12.GetValue(4).Equals("")) { returnVote.DownVoted = reader12.GetValue(4).ToString(); }
+                if (reader12.GetValue(5).Equals("")) { } else if (!reader12.GetValue(5).Equals("")) { returnVote.StarVoted = reader12.GetValue(5).ToString(); }
+                if (reader12.GetValue(6).Equals("")) { } else if (!reader12.GetValue(6).Equals("")) { returnVote.Flagged = reader12.GetValue(6).ToString(); }
+                if (reader12.GetValue(7).Equals("")) { } else if (!reader12.GetValue(7).Equals("")) { returnVote.DateVoted = reader12.GetValue(7).ToString(); }
+                
+            }
+            reader12.Close();
+            conn12.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        
+        Console.WriteLine(returnVote.ToString());
+        return returnVote;
     }
 }
