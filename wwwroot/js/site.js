@@ -7,6 +7,25 @@ document.getElementById("userInput").value = "Anonymous";
 document.getElementById("userInput").disabled = true;
 
 
+//Hides everything above the input box
+function hideBanner() {
+    var banner_div_block = document.getElementById('banner-fade');
+    if (banner_div_block.classList.contains('banner-fade-hidden')) { } else { banner_div_block.classList.add('banner-fade-hidden'); }
+    let endThis = document.getElementById('banner-fade');
+    endThis.addEventListener('animationstart', (ev) => {
+        window.scrollTo({
+            behavior: 'smooth',
+            top: endThis.offsetTop + endThis.clientHeight - window.innerHeight
+        });
+    });
+    //ensures placement regardless of window position at execution.  //eliminates overshooting the mark
+    endThis.addEventListener('animationend', (ev) => {
+        window.scrollTo({
+            behavior: 'smooth',
+            top: endThis.offsetTop + endThis.clientHeight - window.innerHeight
+        });
+    });
+}
 
 //this starts the indicator that the backend system is processing.
 function startSpin() {
@@ -72,7 +91,6 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     var userDownVoted = postData[12];
     var userFavorited = postData[13];
     var userFlagged = postData[14];
-    console.log(postData);
 
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
@@ -216,8 +234,7 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
 });
 
 connection.on("ReceiveMessageHumor", function (postDataIn) {
-    var postData = JSON.parse(postDataIn);
-    
+    var postData = JSON.parse(postDataIn);    
     var postId = postData[0];
     var truth = postData[1];
     var humor = postData[2];
@@ -233,7 +250,6 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     var userDownVoted = postData[12];
     var userFavorited = postData[13];
     var userFlagged = postData[14];
-    console.log(postData); //save for testing
 
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
@@ -392,7 +408,6 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     var userDownVoted = postData[12];
     var userFavorited = postData[13];
     var userFlagged = postData[14];
-    console.log(postData); //save for testing
 
     const loggedInScreename = document.querySelector(".screenname").id;
     document.getElementById("insert-messages").classList.add("messages-container");
@@ -681,9 +696,7 @@ connection.start().then(function () {
     let ending = 10;
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
-
     connection.invoke("SendMessages", starting, ending, user);
-
     onLoadAI();
 }).catch(function (err) {
     return console.error(err.toString());
@@ -718,16 +731,12 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
     eraseText();
 });
-document.getElementById("sendButton2").addEventListener("click", function (event) {
-    
+document.getElementById("sendButton2").addEventListener("click", function (event) {    
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     const tabs = document.querySelectorAll('.tab');
-    startSpin();
-    
-    console.log('Should be spinning');
+    startSpin();    
     if (tabs[3].classList.contains('active')) {
-        document.getElementById("testid").scrollIntoView();
         var queryAI = document.getElementById("messageInputAI").value;
         let postId = "0";
         connection.invoke("ProccessAI", user, queryAI, postId, screenname).catch(function (err) {
@@ -739,17 +748,15 @@ document.getElementById("sendButton2").addEventListener("click", function (event
 });
 const select_io = document.querySelector('.angled-left');
 const select_ai = document.querySelector('.angled-right');
-select_io.addEventListener('click', function () {
-    /*document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })*/
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+select_io.addEventListener('click', function () {    
 
+    hideBanner();
     if (document.getElementById('bopis').checked == false) {
         toggle_button.click();
     }
 });
 select_ai.addEventListener('click', function () {
-    /*document.getElementById('test-id').scrollTop({ behavior: "smooth", block: "start", inline: "start" })*/
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    hideBanner();
     if (document.getElementById('bopis').checked == true) {
         toggle_button.click();
     }
@@ -763,10 +770,6 @@ function initButtonRow() {
     var col1 = document.querySelector('.response-column1');
     col1.onclick = function () {
         loginNotification();
-        console.log('Thumbs Up');
-        console.log(pepper.toString());
-        console.log(jam.toString());
-        console.log(col1.id);
         var voteTypeOut = "Up";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
@@ -780,11 +783,6 @@ function initButtonRow() {
     var col2 = document.querySelector('.response-column2');
     col2.onclick = function () {
         loginNotification();
-        console.log('Thumbs Down');
-        console.log(pepper.toString());
-        console.log(jam.toString());
-        console.log(col2.id);
-
         var voteTypeOut = "Down";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
@@ -816,11 +814,6 @@ function initButtonRow() {
     var col4 = document.querySelector('.response-column4');
     col4.onclick = function () {
         loginNotification();
-        console.log('Flagged');
-        console.log(pepper.toString());
-        console.log(jam.toString());
-        console.log(col4.id);
-
         var voteTypeOut = "Flag";
         var pepperOut = pepper.toString();
         var userNameOut = jam.toString();
@@ -947,7 +940,6 @@ tabs.forEach((tab, index) => {
         tabs.forEach(tab => { tab.classList.remove('active') });
         indicators.forEach(indicator => { indicator.classList.remove('active') });
         contents.forEach(content => { content.classList.remove('active') });
-
         if (tab.classList[0].includes('tab1')) {
             indicators.forEach(indicator => { indicator.classList.remove('active') });
             indicators[0].classList.add('active');
@@ -1000,22 +992,26 @@ tabs.forEach((tab, index) => {
         }
     })
 })
+
+
 //end tabs
 //begin card flip
 document.getElementById("bopis").checked = true;
 const toggle_button = document.querySelector('.on-off-toggle__input');
 const card = document.getElementById('card__inner');
-
 var intro_text = document.getElementById('intro-text');
 var intro_ai = document.getElementById('intro_ai');
-var intro_io= document.getElementById('intro_io');
+var intro_io = document.getElementById('intro_io');
 intro_text.classList.add('intro-hidden');
 intro_io.classList.add('intro-hidden');
 intro_ai.classList.add('intro-un-hidden');
 toggle_button.addEventListener('click', function () {
     eraseText();
+    hideBanner();
+
     card.classList.toggle('is--flipped');
-    document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+
+
     //this is the ai reveal
     if (card.classList.contains('is--flipped')) {
         
@@ -1023,6 +1019,7 @@ toggle_button.addEventListener('click', function () {
         revealAIMessages();
         intro_text.classList.remove('intro-un-hidden');
         intro_text.classList.add('intro-hidden');
+        
         intro_ai.classList.add('intro-un-hidden');
         intro_ai.classList.remove('intro-hidden');
         intro_io.classList.remove('intro-un-hidden');
@@ -1040,6 +1037,7 @@ toggle_button.addEventListener('click', function () {
     }
     //this is the io reveal
     if (!card.classList.contains('is--flipped')) {
+        
         hideAIMessages();
         revealPostMessages();
         intro_text.classList.remove('intro-hidden');
@@ -1048,7 +1046,6 @@ toggle_button.addEventListener('click', function () {
         intro_io.classList.remove('intro-hidden');
         intro_ai.classList.remove('intro-un-hidden');
         intro_ai.classList.add('intro-hidden');
-
         indicators.forEach(indicator => { indicator.classList.remove('active') });
         indicators[0].classList.add('active');
         contents.forEach(content => { content.classList.remove('active') });
@@ -1067,9 +1064,7 @@ function showAI() {
     revealAIMessages();
     indicators.forEach(indicator => { indicator.classList.remove('active') });
     indicators[3].classList.add('active');
-
     messageInputAI.forEach(elem => { elem.classList.remove('hide_textarea') });
-
     contents.forEach(content => { content.classList.remove('active') });
     contents.forEach(content => { content.classList.remove('hide_textarea') });
     contents[0].classList.add('hide_textarea');
@@ -1078,18 +1073,14 @@ function showAI() {
     contents[3].classList.add('hide_textarea');
     contents[4].classList.add('active');
     tabs[3].classList.add('active');
-
 }
 function onLoadAI() {
     eraseText();
     if (card.classList.contains('is--flipped')) {
-        /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });*/
         showAI();
     }
     if (!card.classList.contains('is--flipped')) {
-
         card.classList.toggle('is--flipped');
-        /*document.getElementById('test-id').scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });*/
         document.getElementById("bopis").checked = false;
         showAI();
     }
