@@ -691,16 +691,20 @@ connection.on("UpdateContributions", function (user, updatedContributions) {
 
 //starts connection and initiates responses.
 connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
+
     let starting = 0;
     let ending = 10;
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     connection.invoke("SendMessages", starting, ending, user);
     onLoadAI();
+    var connectionid = connection.connectionId;
+    console.log(connectionid);
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
@@ -735,11 +739,13 @@ document.getElementById("sendButton2").addEventListener("click", function (event
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
     const tabs = document.querySelectorAll('.tab');
+    var connectionId = connection.connectionId;
+    console.log(connectionId);
     startSpin();    
     if (tabs[3].classList.contains('active')) {
         var queryAI = document.getElementById("messageInputAI").value;
         let postId = "0";
-        connection.invoke("ProccessAI", user, queryAI, postId, screenname).catch(function (err) {
+        connection.invoke("ProccessAI", user, queryAI, postId, screenname, connectionId).catch(function (err) {
             return console.error(err.toString());
         });
     }
