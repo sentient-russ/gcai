@@ -890,4 +890,24 @@ public class DataAccess
         Console.WriteLine(returnVote.ToString());
         return returnVote;
     }
+    public void RemoveVote(string postRefIn, string userIdIn, string voteType)
+    {
+        try
+        {
+            MySqlConnection conn1 = new MySqlConnection(connectionString);
+            conn1.Open();
+            string sqlFavString = "DELETE FROM gcai.VoteModel WHERE idPostModel = @idPostModel AND UserID = @UserId AND @voteType = 1";
+            MySqlCommand cmd4 = new MySqlCommand(sqlFavString, conn1);
+            cmd4.Parameters.AddWithValue("@idPostModel", postRefIn);
+            cmd4.Parameters.AddWithValue("@UserId", userIdIn);
+            cmd4.Parameters.AddWithValue("@VoteType", voteType);
+            cmd4.ExecuteNonQuery();
+            conn1.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+    }
 }
