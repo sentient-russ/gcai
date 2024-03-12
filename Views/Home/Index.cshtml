@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "GroupConscience";
 }
+<div class="banner-fade" id="banner-fade">
 <div class="banner">
     <img class="banner-img" src="~/img/banner-7.png" />
     <div class="banner-text-container">
@@ -25,18 +26,20 @@
         </div>
     </div>
 </div>
+<div id="scroll-handle"></div>
 <div class="intro-heading-ai" id="intro_ai" >
-    Our collective conscience is here to aid in your recovery journey by providing grounded literature and member-supplemented information.
+    <span class="intro-ai-text">Our collective conscience is here to aid in your recovery journey by providing grounded literature and member-supplemented information.</span>
 </div>
 <div class="intro-heading" id="intro_io">
-    Together, we make contributions with an immense reach; by placing our anonymous beliefs within a collective AI conscience.
+    <span class="intro-io-text">Together, we make contributions with an immense reach; by placing our anonymous beliefs within a collective AI conscience.</span>
+   @*  <span class="intro-io-subtext">If you have a desire to stop drinking or stay sober, you are invited to contribute using this form. Registered users gain the abillity to have votes counted. Additionally, their favorites and posts can be managed under their profile. May the power behind the program be your guide.</span> *@
 </div>
 <div class="intro-text general-body-text" id="intro-text">
-    If you have a desire to stop drinking or stay sober, you are invited to contribute using this form. Registered users gain the abillity to have votes counted. Additionally, their favorites and posts can be managed under their profile. May the power behind the program be your guide.
+    @*  If you have a desire to stop drinking or stay sober, you are invited to contribute using this form. Registered users gain the abillity to have votes counted. Additionally, their favorites and posts can be managed under their profile. May the power behind the program be your guide. *@
 </div>
-<div class="scrollholder" id="test-id"></div>
+</div>
 <br />
-<div class="toggle-container" >
+<div class="toggle-container">
     <span class="toggle-description">Toggle Share/Chat mode.</span>
     <div class="on-off-toggle" >
         <input class="on-off-toggle__input" type="checkbox" id="bopis" />
