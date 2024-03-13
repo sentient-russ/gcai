@@ -549,7 +549,7 @@ public class DataAccess
             cmd3.Parameters.AddWithValue("@DownVoted", voteIn.DownVoted);
             cmd3.Parameters.AddWithValue("@StarVoted", voteIn.StarVoted);
             cmd3.Parameters.AddWithValue("@Flagged", voteIn.Flagged);
-            cmd3.Parameters.AddWithValue("@ScreenName", voteIn.Flagged);
+            cmd3.Parameters.AddWithValue("@ScreenName", voteIn.ScreenName);
             if (voteIn.DateVoted == "")
             {
                 cmd3.Parameters.AddWithValue("@DateVoted", DateTime.Now.ToString("yyyy-MM-dd"));
@@ -896,11 +896,12 @@ public class DataAccess
         {
             MySqlConnection conn1 = new MySqlConnection(connectionString);
             conn1.Open();
-            string sqlFavString = "DELETE FROM gcai.VoteModel WHERE idPostModel = @idPostModel AND UserID = @UserId AND @voteType = 1";
+            string sqlFavString = "DELETE FROM gcai.VoteModels WHERE PostRefNum = @idPostModel AND UserId = @UserId AND " + voteType + " = '1'";
             MySqlCommand cmd4 = new MySqlCommand(sqlFavString, conn1);
             cmd4.Parameters.AddWithValue("@idPostModel", postRefIn);
             cmd4.Parameters.AddWithValue("@UserId", userIdIn);
             cmd4.Parameters.AddWithValue("@VoteType", voteType);
+            cmd4.Parameters.AddWithValue("@qty", "1");
             cmd4.ExecuteNonQuery();
             conn1.Close();
         }
@@ -908,6 +909,5 @@ public class DataAccess
         {
             Console.WriteLine(ex.ToString());
         }
-
     }
 }

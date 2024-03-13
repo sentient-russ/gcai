@@ -25,6 +25,7 @@ function hideBanner() {
             top: endThis.offsetTop + endThis.clientHeight - window.innerHeight
         });
     });
+    endThis.classList.add('hidden');
 }
 
 //this starts the indicator that the backend system is processing.
@@ -168,6 +169,7 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
     span10.textContent = `${totalPostUpVotes}`;
+    span10.setAttribute("id", postId + "-usr_upVoted");
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
@@ -179,6 +181,7 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
     span11.textContent = `${totalPostDownVotes}`;
+    span11.setAttribute("id", postId + "-usr_downVoted");
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -189,13 +192,17 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
     div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (userFavorited != "1") { } else {
-        var div12 = document.createElement('div');
-        div12.classList.add("vote-count");
-        var span12 = document.createElement('span');
-        span12.textContent = "*";
-        div12.appendChild(span12);
-        div4.appendChild(div12);
+    var div12 = document.createElement('div');
+    div12.classList.add("transparent");
+    div12.classList.add("vote-count");
+    var span12 = document.createElement('span');
+    span12.setAttribute("id", postId + "-usr_stared");
+    span12.textContent = "0";
+    div12.appendChild(span12);
+    div4.appendChild(div12);
+    if (userFavorited == "1") {
+        span12.textContent = "1";
+        div12.classList.remove("transparent");
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
@@ -206,6 +213,7 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
     span13.textContent = `${totalPostFlags}`;
+    span13.setAttribute("id", postId + "-usr_flagged");
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -232,9 +240,8 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     stopSpin();
     initButtonRow();
 });
-
 connection.on("ReceiveMessageHumor", function (postDataIn) {
-    var postData = JSON.parse(postDataIn);    
+    var postData = JSON.parse(postDataIn);
     var postId = postData[0];
     var truth = postData[1];
     var humor = postData[2];
@@ -327,6 +334,7 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
     span10.textContent = `${totalPostUpVotes}`;
+    span10.setAttribute("id", postId + "-usr_upVoted");
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
@@ -338,6 +346,7 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
     span11.textContent = `${totalPostDownVotes}`;
+    span11.setAttribute("id", postId + "-usr_downVoted");
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -348,13 +357,17 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
     div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (userFavorited != "1") { } else {
-        var div12 = document.createElement('div');
-        div12.classList.add("vote-count");
-        var span12 = document.createElement('span');
-        span12.textContent = "*";
-        div12.appendChild(span12);
-        div4.appendChild(div12);
+    var div12 = document.createElement('div');
+    div12.classList.add("transparent");
+    div12.classList.add("vote-count");
+    var span12 = document.createElement('span');
+    span12.setAttribute("id", postId + "-usr_stared");
+    span12.textContent = "0";
+    div12.appendChild(span12);
+    div4.appendChild(div12);
+    if (userFavorited == "1") {
+        span12.textContent = "1";
+        div12.classList.remove("transparent");
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
@@ -365,6 +378,7 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
     span13.textContent = `${totalPostFlags}`;
+    span13.setAttribute("id", postId + "-usr_flagged");
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -472,7 +486,7 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     p.classList.add('member-question');
     p.classList.add('message-paragraph');
     p.textContent = `${problem}`;
-    div16.appendChild(p);    
+    div16.appendChild(p);
     var div17 = document.createElement("div");
     div17.classList.add('message-row');
     div2.appendChild(div17);
@@ -500,6 +514,7 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     div10.classList.add("vote-count");
     var span10 = document.createElement('span');
     span10.textContent = `${totalPostUpVotes}`;
+    span10.setAttribute("id", postId + "-usr_upVoted");
     div10.appendChild(span10);
     div4.appendChild(div10);
     var div6 = document.createElement('div');
@@ -511,6 +526,7 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     div11.classList.add("vote-count");
     var span11 = document.createElement('span');
     span11.textContent = `${totalPostDownVotes}`;
+    span11.setAttribute("id", postId + "-usr_downVoted");
     div11.appendChild(span11);
     div4.appendChild(div11);
     var div7 = document.createElement('div');
@@ -521,13 +537,17 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     if (userFavorited.localeCompare("1") == 0) { div8.classList.add("user-voted"); }
     div8.setAttribute("id", postId);
     div4.appendChild(div8);
-    if (userFavorited != "1") { } else {
-        var div12 = document.createElement('div');
-        div12.classList.add("vote-count");
-        var span12 = document.createElement('span');
-        span12.textContent = "*";
-        div12.appendChild(span12);
-        div4.appendChild(div12);
+    var div12 = document.createElement('div');
+    div12.classList.add("transparent");
+    div12.classList.add("vote-count");
+    var span12 = document.createElement('span');
+    span12.setAttribute("id", postId + "-usr_stared");
+    span12.textContent = "0";
+    div12.appendChild(span12);
+    div4.appendChild(div12);
+    if (userFavorited == "1") {
+        span12.textContent = "1";
+        div12.classList.remove("transparent");
     }
     var div9 = document.createElement('div');
     div9.classList.add("response-column4");
@@ -538,6 +558,7 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     div13.classList.add("vote-count");
     var span13 = document.createElement('span');
     span13.textContent = `${totalPostFlags}`;
+    span13.setAttribute("id", postId + "-usr_flagged");
     div13.appendChild(span13);
     div4.appendChild(div13);
     var img2 = document.createElement('img')
@@ -767,73 +788,289 @@ select_ai.addEventListener('click', function () {
         toggle_button.click();
     }
 });
+//method only controls imediate vote results in the dom.  Server fed value are pushed on refresh.
+function updateCurrentPostVote(postId, qtyAdj, voteType) {
+
+    if (voteType == "UpVoted") {
+        var upVotedElementId = postId + "-usr_upVoted";
+        var upVoteElement = document.getElementById(upVotedElementId);
+        var currentCount = parseInt(upVoteElement.textContent);
+        var newCount = currentCount + qtyAdj;
+        upVoteElement.textContent = newCount;
+        //adjusting user-voted tags must be done in the calling class
+    } else if (voteType == "DownVoted") {
+        var downVotedElementId = postId + "-usr_downVoted";
+        var downVoteElement = document.getElementById(downVotedElementId);
+        var currentCount = parseInt(downVoteElement.textContent);
+        var newCount = currentCount + qtyAdj;
+        downVoteElement.textContent = newCount;
+        //adjusting user-voted tags must be done in the calling class
+    } else if (voteType == "StarVoted") {
+        var staredElementId = postId + "-usr_stared";
+        var staredElement = document.getElementById(staredElementId);
+        var currentValue = staredElement.textContent;
+        console.log(staredElementId)
+        console.log(postId)
+        console.log(staredElement.textContent)
+        if (currentValue == "0") {
+            staredElement.textContent = "1";
+            document.querySelector('.response-column3').classList.add("user-voted"); 6
+            document.getElementById(staredElementId).parentNode.classList.remove('transparent');
+        } else if (currentValue == "1") {
+            staredElement.textContent = "0";
+            document.querySelector('.response-column3').classList.remove("user-voted");
+            document.getElementById(staredElementId).parentNode.classList.add('transparent');
+        }
+    } else if (voteType == "Flagged") {
+        var flaggedElementId = postId + "-usr_flagged";
+        var flaggedElement = document.getElementById(flaggedElementId);
+        var currentCount = parseInt(flaggedElement.textContent);
+        var newCount = currentCount + qtyAdj;
+        flaggedElement.textContent = newCount;
+        //adjusting user-voted tags must be done in the calling class
+    }
+}
+
 //post response buttons
 function initButtonRow() {
     var screenname = document.querySelector('.screenname').id;
-    var pepper = document.querySelector('.pepper').id
-    var jam = document.querySelector('.jam').id
-    //up vote
+    var pepper = document.querySelector('.pepper').id;
+    var jam = document.querySelector('.jam').id;
     var col1 = document.querySelector('.response-column1');
+    var col2 = document.querySelector('.response-column2');
+    var col3 = document.querySelector('.response-column3');
+    var col4 = document.querySelector('.response-column4');
+    var usr_upVoted = false;
+    var usr_downVoted = false;
+    var usr_stared = false;
+    var usr_flagged = false;
+    if (col1.classList.contains("user-voted")) { usr_upVoted = true; }
+    if (col2.classList.contains("user-voted")) { usr_downVoted = true; }
+    if (col3.classList.contains("user-voted")) { usr_stared = true; }
+    if (col4.classList.contains("user-voted")) { usr_flagged = true; }
+    //updates the logic tree for dom user-voted element id tags to comprehend various vote states 
+    function varRefresh() {
+        if (col1.classList.contains("user-voted")) { usr_upVoted = true; }
+        if (col2.classList.contains("user-voted")) { usr_downVoted = true; }
+        if (col3.classList.contains("user-voted")) { usr_stared = true; }
+        if (col4.classList.contains("user-voted")) { usr_flagged = true; }
+    }
+    //up vote
     col1.onclick = function () {
         loginNotification();
-        var voteTypeOut = "Up";
-        var pepperOut = pepper.toString();
-        var userNameOut = jam.toString();
-        const messageIdOut = col1.id.toString();
-        var screenNameOut = screenname;
-        connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
-            return console.error(err.toString());
-        });
+        var screenName = document.querySelector(".screenname").id;
+        if (screenName == 'Anonymous') { }
+        else {
+            console.log("Col1 UpVoted Clicked!")
+            var pepperOut = pepper.toString();
+            var userNameOut = jam.toString();
+
+            const messageIdOut = col1.id.toString();
+            var screenNameOut = screenname;
+
+            if (usr_upVoted || usr_downVoted || usr_flagged) {
+                if (usr_upVoted) {
+                    var voteTypeOut = "UpVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col1.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_downVoted) {
+                    var voteTypeOut = "DownVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col2.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_flagged) {
+                    var voteTypeOut = "Flagged";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col4.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                }
+            }
+            //the usr_upVoted state is past tense here. It was set prior to the user current vote. This refrains from casting a vote is  it's no necessary due to an un-vote occurance. It also allows a new vote to be cast if the post was not already voted for by the user.
+            if (usr_upVoted) {
+                usr_upVoted = false;
+                col1.classList.remove('.user-voted');
+            } else {
+                var voteTypeOut = "UpVoted";
+                let qtyAdjOut = 1;
+                updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                col1.classList.add('user-voted');
+                col2.classList.remove('user-voted');
+                col4.classList.remove('user-voted');
+                usr_upVoted = true;
+                usr_downVoted = false;
+                usr_flagged = false;
+                connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }
+        }//end soft login check
     }
     //down vote
-    var col2 = document.querySelector('.response-column2');
     col2.onclick = function () {
         loginNotification();
-        var voteTypeOut = "Down";
-        var pepperOut = pepper.toString();
-        var userNameOut = jam.toString();
-        const messageIdOut = col2.id.toString();
-        var screenNameOut = screenname;
+        var screenName = document.querySelector(".screenname").id;
+        if (screenName == 'Anonymous') { }
+        else {
+            console.log("Col2 DownVoted Clicked!")
+            varRefresh();
+            var pepperOut = pepper.toString();
+            var userNameOut = jam.toString();
+            const messageIdOut = col2.id.toString();
+            var screenNameOut = screenname;
 
-        connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
-            return console.error(err.toString());
-        });
+            if (usr_upVoted || usr_downVoted || usr_flagged) {
+                if (usr_upVoted) {
+                    var voteTypeOut = "UpVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col1.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_downVoted) {
+                    var voteTypeOut = "DownVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col2.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_flagged) {
+                    var voteTypeOut = "Flagged";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col4.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                }
+            }
+            //the usr_downVoted state is past tense here. It was set prior to the users current vote. This refrains from casting a vote is it's no necessary due to an un-vote occurance. It also allows a new vote to be cast if the post was not already voted for by the user.
+            if (usr_downVoted) {
+                usr_downVoted = false;
+                col2.classList.remove('.user-voted');
+            } else {
+                var voteTypeOut = "DownVoted";
+                let qtyAdjOut = 1;
+                updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                col2.classList.add('user-voted');
+                col1.classList.remove('user-voted');
+                col3.classList.remove('user-voted');
+
+                usr_upVoted = false;
+                usr_downVoted = true;
+                usr_flagged = false;
+                connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }
+        }//end soft login check
     }
-    //star vote
-    var col3 = document.querySelector('.response-column3');
+    //stared
     col3.onclick = function () {
         loginNotification();
-        console.log('Stars');
-        console.log(pepper.toString());
-        console.log(jam.toString());
-        console.log(col3.id);
-        var voteTypeOut = "Star";
-        var pepperOut = pepper.toString();
-        var userNameOut = jam.toString();
-        const messageIdOut = col3.id.toString();
-        var screenNameOut = screenname;
-        connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
-            return console.error(err.toString());
-        });
+
+        if (screenName == 'Anonymous') { }
+        else {
+            console.log("Col3 Stared Clicked!")
+            varRefresh();
+            var voteTypeOut = "StarVoted";
+            var pepperOut = pepper.toString();
+            var userNameOut = jam.toString();
+            var screenName = document.querySelector(".screenname").id;
+            const messageIdOut = col3.id.toString();
+            var screenNameOut = screenname;
+
+            if (usr_stared) {
+                var qtyAdjOut = -1;
+                updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            } else if (!usr_stared) {
+                var qtyAdjOut = 1;
+                updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }
+        }//end soft login check
     }
-    //flag vote
-    var col4 = document.querySelector('.response-column4');
+    //flagged vote
     col4.onclick = function () {
         loginNotification();
-        var voteTypeOut = "Flag";
-        var pepperOut = pepper.toString();
-        var userNameOut = jam.toString();
-        const messageIdOut = col4.id.toString();
-        var screenNameOut = screenname;
+        var screenName = document.querySelector(".screenname").id;
+        if (screenName == 'Anonymous') { }
+        else {
+            console.log("Col4 Flagged Clicked!")
+            varRefresh();
+            var pepperOut = pepper.toString();
+            var userNameOut = jam.toString();
+            const messageIdOut = col4.id.toString();
+            var screenNameOut = screenname;
 
-        connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
-            return console.error(err.toString());
-        });
+            if (usr_upVoted || usr_downVoted || usr_flagged) {
+                if (usr_upVoted) {
+                    var voteTypeOut = "UpVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col1.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_downVoted) {
+                    var voteTypeOut = "DownVoted";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col2.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                } else if (usr_flagged) {
+                    var voteTypeOut = "Flagged";
+                    let qtyAdjOut = -1;
+                    updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                    col4.classList.remove('user-voted');
+                    connection.invoke("RemoveVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                }
+            }
+            //the usr_flagged state is past tense here. It was set prior to the users current vote. This refrains from casting a vote is  it's no necessary due to an un-vote occurance. It also allows a new vote to be cast if the post was not already voted for by the user.
+            if (usr_flagged) {
+                usr_flagged = false;
+                col4.classList.remove('.user-voted');
+            } else {
+                var voteTypeOut = "Flagged";
+                let qtyAdjOut = 1;
+                updateCurrentPostVote(messageIdOut, qtyAdjOut, voteTypeOut);
+                col4.classList.add('user-voted');
+                col1.classList.remove('user-voted');
+                col2.classList.remove('user-voted');
+                usr_upVoted = false;
+                usr_downVoted = false;
+                usr_flagged = true;
+                connection.invoke("CastVote", voteTypeOut, pepperOut, userNameOut, messageIdOut, screenNameOut).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }
+        }//end soft login check        
+
     }
-
     // Toast functions
     function loginNotification() {
         var element = document.querySelector(".screenname").id;
+
         if (element == 'Anonymous') {
             $.toast({
                 heading: 'Login Required',
@@ -866,6 +1103,7 @@ function initButtonRow() {
         'callback': null // if exists, called after all effects have finished
     });
 }
+
 //clear button
 function eraseText() {
     document.getElementById("messageInputTruth").value = "";
@@ -879,7 +1117,8 @@ function invokeIAHello() {
     
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
-    connection.invoke("helloAI", user, screenname).catch(function (err) {
+    var connectionId = connection.connectionId;
+    connection.invoke("helloAI", user, screenname, connectionId).catch(function (err) {
         return console.error(err.toString());
     });
 }
