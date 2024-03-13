@@ -16,7 +16,7 @@ namespace gcio.Hubs
 {
     public class PostHub : Hub
     {
-        
+
         public async Task SendMessages(int startPostNum, int endPostNum, string userIn)
         {
             string connectionId = Context.ConnectionId.ToString();
@@ -113,7 +113,7 @@ namespace gcio.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessageProblemSolution", postData);
         }
-    
+
         //sends indevidual message to all clients
         public async Task SendMessageTruth(string user, string message, string id, string screenname)
         {
@@ -126,13 +126,15 @@ namespace gcio.Hubs
             postModel.UserId = user;
             postModel.Truth = message;
             postModel.PostDate = DateTime.Now.ToString("MM-dd-yyy");
-            if(id != "0")
+            if (id != "0")
             {
                 postModel.idPostModel = id;
-            } else {
+            }
+            else
+            {
                 postModel.idPostModel = newId;
             }
-            postModel.ScreenName = screenname;           
+            postModel.ScreenName = screenname;
             post = toPost.PutNewPost(postModel);
             string? totalUserContributions = toPost.GetUserContributions(user);
 
@@ -260,7 +262,7 @@ namespace gcio.Hubs
         {
             string? dateTime = DateAndTime.Now.ToString("yyyy:MM:dd:hh:mm:ss.FFFF");
             string newId = dateTime.Replace(":", "").Replace(".", "");
-            
+
             AIModel queryModel = new AIModel();
             queryModel.UserId = user;
             queryModel.Prompt = queryAI;
@@ -276,13 +278,26 @@ namespace gcio.Hubs
             queryModel.ScreenName = screenname;
             AIAccess aiAccess = new AIAccess();
             AIModel aiResponse = new AIModel();
-            aiResponse =  await aiAccess.QueryAI(queryModel);
+            aiResponse = await aiAccess.QueryAI(queryModel);
             AIModel storedResponse = new AIModel();
             DataAccess storeQuery = new DataAccess();
             storedResponse = storeQuery.PutNewAIExchange(aiResponse);
             Console.WriteLine(connectionId);
             await Clients.Client(connectionId).SendAsync("ReceiveAIResponse", user, storedResponse.Prompt, storedResponse.Answer, storedResponse.idAIModel, storedResponse.ScreenName);
         }
+        //RemoveVote removeUp, removeDown, removeStared, removeFlagged, 
+        public async Task RemoveVote(string voteTypeIn, string pepperIn, string userNameIn, string messageIdIn, string screenname)
+        {
+            DataAccess vote = new DataAccess();
+            if (vote.ValidatePepper(userNameIn, pepperIn))//Checks to make sure user is an authenticated user.
+            {
+                string postRefIn = messageIdIn;
+                string userIdIn = userNameIn;
+                string voteType = voteTypeIn;
+                vote.RemoveVote(postRefIn, userIdIn, voteType);
+            }
+        }
+
         //Take in vote
         public async Task CastVote(string voteTypeIn, string pepperIn, string userNameIn, string messageIdIn, string screenname)
         {
@@ -296,13 +311,20 @@ namespace gcio.Hubs
                 voteModel.idVoteModel = newId;
                 voteModel.PostRefNum = messageIdIn;
                 voteModel.UserId = userNameIn;
-                if (voteTypeIn == "Up"){
+                if (voteTypeIn == "UpVoted")
+                {
                     voteModel.UpVoted = "1";
-                } else if (voteTypeIn == "Down"){
+                }
+                else if (voteTypeIn == "DownVoted")
+                {
                     voteModel.DownVoted = "1";
-                } else if (voteTypeIn == "Star"){
+                }
+                else if (voteTypeIn == "StarVoted")
+                {
                     voteModel.StarVoted = "1";
-                } else{
+                }
+                else if (voteTypeIn == "Flagged")
+                {
                     voteModel.Flagged = "1";
                 }
                 voteModel.DateVoted = DateTime.Now.ToString("MM-dd-yyy");
@@ -318,13 +340,15 @@ namespace gcio.Hubs
         }
         //invokeIAHello
         //Take in vote
-        public async Task helloAI(string userIdIn, string screennameIn)
+        public async Task helloAI(string userIdIn, string screennameIn, string connectionId)
         {
             string prompt = "Hello AI!";
             string answer = "Hello there! *smiles* My name is Alex AI.  My primary aim is to help by answering any questions you have about recovery from alcoholism. It's great that you're reaching out for guidance on your journey. Please feel free to ask me anything and I will do my best to provide you with helpful and accurate information based on Alcoholics Anonymous literature and what has been shared by our members. Please remember to check with your local AA group, sponsor, and healthcare professional regarding the information that I provide. I do make mistakes.";
             string id = "001";
+            Console.WriteLine(connectionId);
+            await Clients.Client(connectionId).SendAsync("ReceiveAIResponse", userIdIn, prompt, answer, id, screennameIn);
 
-            await Clients.All.SendAsync("ReceiveAIResponse", userIdIn, prompt, answer, id, screennameIn);
         }
     }
 }
+
