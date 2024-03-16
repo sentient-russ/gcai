@@ -98,6 +98,7 @@ connection.on("ReceiveMessageTruth", function (postDataIn) {
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
     div2.classList.add(postId);
+    div2.setAttribute("id", postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -263,6 +264,7 @@ connection.on("ReceiveMessageHumor", function (postDataIn) {
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
     div2.classList.add(postId);
+    div2.setAttribute("id", postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -428,6 +430,7 @@ connection.on("ReceiveMessageProblemSolution", function (postDataIn) {
     var div2 = document.createElement("div");
     div2.classList.add("user-message-container");
     div2.classList.add(postId);
+    div2.setAttribute("id", postId);
     var div3 = document.createElement("div");
     div3.classList.add('avatar-row');
     div2.appendChild(div3);
@@ -713,18 +716,94 @@ connection.on("UpdateContributions", function (user, updatedContributions) {
 //starts connection and initiates responses.
 connection.start().then(function () {
 
-    let starting = 0;
-    let ending = 10;
+    let currentPage = 1;
     var user = document.querySelector('.jam').id;
     var screenname = document.querySelector('.screenname').id;
-    connection.invoke("SendMessages", starting, ending, user);
+    connection.invoke("SendMessages", currentPage, user,);
     onLoadAI();
     var connectionid = connection.connectionId;
     console.log(connectionid);
 }).catch(function (err) {
     return console.error(err.toString());
 });
+const previousPageSelector = document.getElementById('left-nav-next');
+const nextPageSelector = document.getElementById('right-nav-next');
+const rightNavEnd = document.getElementById('right-nav-end');
+const leftNavEnd = document.getElementById('left-nav-end');
+function initNav() {    
+    previousPageSelector.onclick = function () {
+        var connectionId = connection.connectionId;
+        var user = document.querySelector('.jam').id;
+        var previousText = previousPageSelector.innerText;
+        let newPage = parseInt(previousText[0]);
+        if (newPage << 0) {
+            connection.invoke("AdjustPosts", newPage, user, connectionId).catch(function (err) {
+                return console.error(err.toString());
+                
+            });
+        }      
+    }
+    nextPageSelector.onclick = function () {
+        var connectionId = connection.connectionId;
+        var user = document.querySelector('.jam').id;
+        var nextText = nextPageSelector.innerText;
+        let newPage = parseInt(nextText[0]);
+        let lastPage = parseInt(nextText[2]);
+        if (newPage <= lastPage) {
+            connection.invoke("AdjustPosts", newPage, user, connectionId).catch(function (err) {
+                return console.error(err.toString());
+            });
+        } 
+    }
+    leftNavEnd.onclick = function () {
+        var connectionId = connection.connectionId;
+        var user = document.querySelector('.jam').id;
+        var nextText = previousPageSelector.innerText;
+        let nextNewPage = parseInt(nextText[0]);
+        let newPage = 1;
+        if (nextNewPage == 0) { } else {
+            connection.invoke("AdjustPosts", newPage, user, connectionId).catch(function (err) {
+                return console.error(err.toString());
 
+            });
+        }
+    }
+    rightNavEnd.onclick = function () {
+        var connectionId = connection.connectionId;
+        var user = document.querySelector('.jam').id;
+        var nextText = nextPageSelector.innerText;
+        let newPage = parseInt(nextText[0]);
+        let lastPage = parseInt(nextText[2]);
+        if (newPage <= lastPage) {
+            connection.invoke("AdjustPosts", newPage, user, connectionId).catch(function (err) {
+                return console.error(err.toString());
+            });
+        } 
+    }
+} 
+//prev. - next
+
+//update page numbers durring navigation
+
+connection.on("adjustClientNavPages", function (user, newCurrentPageIn, newTotalPagesIn, postsToKeepList) {
+    var newPreviousPage = newCurrentPageIn - 1;
+    var newNextPage = newCurrentPageIn + 1;
+    console.log("postsToKeep: "+postsToKeepList);
+    document.getElementById('previous_page').innerText = newPreviousPage + "|" + newTotalPagesIn;
+    document.getElementById('next_page').innerText = newNextPage + "|" + newTotalPagesIn;
+
+    var oldPostsStringList = [];
+    const oldPostsClassList = document.querySelectorAll('.user-message-container');
+    oldPostsClassList.forEach(elem => { oldPostsStringList.push(elem.id); });
+    console.log("Full List: " + oldPostsStringList);
+
+    oldPostsStringList.forEach(elem => {
+        if (!postsToKeepList.includes(elem)) {
+            console.log(elem);
+            document.getElementById(elem).remove();
+        }
+    });
+});
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.querySelector('.jam').id;
@@ -1132,6 +1211,9 @@ hideAIResponsContainer();
 function hideAIResponses() {
     const aiMessaagesClass = document.querySelectorAll('.ai-message-container');
     aiMessaagesClass.forEach(elem => { elem.classList.add('hidden') });
+    const postPageNave = document.querySelectorAll('.nav-post-range-col');
+    postPageNave.forEach(elem => { elem.classList.add('hidden') });
+
 }
 //hide or reveal messages
 function hidePostMessages() {
@@ -1142,7 +1224,22 @@ function revealPostMessages() {
     const postMessaagesClass = document.querySelectorAll('.messages-container');
     postMessaagesClass.forEach(elem => { elem.classList.remove('hidden') });
     hideAIMessages();
+    const postPageNave = document.querySelectorAll('.nav-post-range-col');
+    postPageNave.forEach(elem => { elem.classList.remove('hidden') });
+    initNav();
+
+    pageNumUpdate();
 }
+function pageNumUpdate() {
+    connection.invoke("GetPages").catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+connection.on("ReceivTotalAvailablePageCount", function (newTotalPagesIn) {
+    document.getElementById('previous_page').innerText = "0|" + newTotalPagesIn;
+    document.getElementById('next_page').innerText = "2|" + newTotalPagesIn;
+});
+
 function hideAIMessages() {
     const aiMessaagesClass = document.querySelectorAll('.ai-container');
     aiMessaagesClass.forEach(elem => { elem.classList.add('hidden') });

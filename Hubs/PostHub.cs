@@ -17,12 +17,142 @@ namespace gcio.Hubs
     public class PostHub : Hub
     {
 
-        public async Task SendMessages(int startPostNum, int endPostNum, string userIn)
+        public async Task AdjustPosts(int newPage, string user, string connectionId)
+        {
+            SendMessagesUser(newPage, user);
+            DataAccess data = new DataAccess();
+            string newTotalPages = data.NewTotalPagesPages();
+            List<PostModel> posts = data.GetPostsByPage(newPage);
+            List<string> postsToKeepList = new List<string>();
+
+            for(int i = 0; i < posts.Count; i++)
+            {
+                postsToKeepList.Add(posts[i].idPostModel);
+            }
+
+            await Clients.Client(connectionId).SendAsync("adjustClientNavPages", user, newPage, newTotalPages, postsToKeepList);
+        }
+        //sends client available page count for post navigation on first load.
+        public async Task GetPages()
+        {
+            DataAccess data = new DataAccess();
+            string totalAvailablePages = data.GetTotalPostPages();
+            string connectionId = Context.ConnectionId.ToString();
+            await SendTotalAvailablePageCount(totalAvailablePages, connectionId);
+        }
+        public async Task SendTotalAvailablePageCount(string totalAvailablePages, string connectionId)
+        {
+            await Clients.Client(connectionId).SendAsync("ReceivTotalAvailablePageCount", totalAvailablePages);
+        }
+        
+
+        //sends messages to a specific user based on selecting next or previous nav options
+        public async Task SendMessagesUser(int pageNumIn, string userIn)
         {
             string connectionId = Context.ConnectionId.ToString();
             List<PostModel> foundPosts = new List<PostModel>();
             DataAccess data = new DataAccess();
-            foundPosts = data.GetUserPosts(startPostNum, endPostNum); //the number of posts for display
+            foundPosts = data.GetPostsByPage(pageNumIn); //the number of posts for display
+
+            for (int i = foundPosts.Count - 1; i >= 0; i--)
+            {
+
+                if (foundPosts[i].PostType == "Truth")
+                {
+                    string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+                    VoteModel userVotes = data.GetUsersVotes(foundPosts[i].idPostModel.ToString(), userIn);
+                    List<string> postData = new List<string>();
+                    postData.Add(foundPosts[i].idPostModel);
+                    postData.Add(foundPosts[i].Truth);
+                    postData.Add(foundPosts[i].Humor);
+                    postData.Add(foundPosts[i].Problem);
+                    postData.Add(foundPosts[i].Solution);
+                    postData.Add(foundPosts[i].UserId);
+                    postData.Add(foundPosts[i].ScreenName);
+                    postData.Add(posterContributionsTotal);
+                    postData.Add(postVotesTally.UpVotedTotal.ToString());
+                    postData.Add(postVotesTally.DownVotedTotal.ToString());
+                    postData.Add(postVotesTally.FlaggedTotal);
+                    postData.Add(userVotes.UpVoted);
+                    postData.Add(userVotes.DownVoted);
+                    postData.Add(userVotes.StarVoted);
+                    postData.Add(userVotes.Flagged);
+
+                    await SendTruthInitUser(JsonConvert.SerializeObject(postData), connectionId);
+                }
+                if (foundPosts[i].PostType == "Humor")
+                {
+                    string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+                    VoteModel userVotes = data.GetUsersVotes(foundPosts[i].idPostModel.ToString(), userIn);
+                    List<string> postData = new List<string>();
+                    postData.Add(foundPosts[i].idPostModel);
+                    postData.Add(foundPosts[i].Truth);
+                    postData.Add(foundPosts[i].Humor);
+                    postData.Add(foundPosts[i].Problem);
+                    postData.Add(foundPosts[i].Solution);
+                    postData.Add(foundPosts[i].UserId);
+                    postData.Add(foundPosts[i].ScreenName);
+                    postData.Add(posterContributionsTotal);
+                    postData.Add(postVotesTally.UpVotedTotal.ToString());
+                    postData.Add(postVotesTally.DownVotedTotal.ToString());
+                    postData.Add(postVotesTally.FlaggedTotal);
+                    postData.Add(userVotes.UpVoted);
+                    postData.Add(userVotes.DownVoted);
+                    postData.Add(userVotes.StarVoted);
+                    postData.Add(userVotes.Flagged);
+
+                    await SendHumorInitUser(JsonConvert.SerializeObject(postData), connectionId);
+                }
+                if (foundPosts[i].PostType == "Problem/Solution")
+                {
+                    string? posterContributionsTotal = data.GetUserContributions(foundPosts[i].UserId);
+                    VoteTallyModel postVotesTally = data.tallyPostVotes(foundPosts[i].idPostModel.ToString());
+                    VoteModel userVotes = data.GetUsersVotes(foundPosts[i].idPostModel.ToString(), userIn);
+                    List<string> postData = new List<string>();
+                    postData.Add(foundPosts[i].idPostModel);
+                    postData.Add(foundPosts[i].Truth);
+                    postData.Add(foundPosts[i].Humor);
+                    postData.Add(foundPosts[i].Problem);
+                    postData.Add(foundPosts[i].Solution);
+                    postData.Add(foundPosts[i].UserId);
+                    postData.Add(foundPosts[i].ScreenName);
+                    postData.Add(posterContributionsTotal);
+                    postData.Add(postVotesTally.UpVotedTotal.ToString());
+                    postData.Add(postVotesTally.DownVotedTotal.ToString());
+                    postData.Add(postVotesTally.FlaggedTotal);
+                    postData.Add(userVotes.UpVoted);
+                    postData.Add(userVotes.DownVoted);
+                    postData.Add(userVotes.StarVoted);
+                    postData.Add(userVotes.Flagged);
+
+                    await SendProbSolInitUser(JsonConvert.SerializeObject(postData), connectionId);
+                }
+            }
+        }
+        public async Task SendTruthInitUser(string postData, string connectionId)
+        {
+            await Clients.Client(connectionId).SendAsync("ReceiveMessageTruth", postData);
+        }
+        public async Task SendHumorInitUser(string postData, string connectionId)
+        {
+            await Clients.Client(connectionId).SendAsync("ReceiveMessageHumor", postData);
+        }
+        public async Task SendProbSolInitUser(string postData, string connectionId)
+        {
+            await Clients.Client(connectionId).SendAsync("ReceiveMessageProblemSolution", postData);
+
+        }
+
+
+
+        public async Task SendMessages(int pageNumIn, string userIn)
+        {
+            string connectionId = Context.ConnectionId.ToString();
+            List<PostModel> foundPosts = new List<PostModel>();
+            DataAccess data = new DataAccess();
+            foundPosts = data.GetPostsByPage(pageNumIn); //the number of posts for display
 
             for (int i = foundPosts.Count - 1; i >= 0; i--)
             {

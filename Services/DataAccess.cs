@@ -56,7 +56,7 @@ public class DataAccess
             MySqlDataReader reader1 = cmd1.ExecuteReader();
             while (reader1.Read())
             {
-                if (reader1.GetValue(5).Equals(DBNull.Value)) { } else {favStack.Add(reader1.GetString(1).ToString()); }
+                if (reader1.GetValue(5).Equals(DBNull.Value)) { } else { favStack.Add(reader1.GetString(1).ToString()); }
 
             }
             reader1.Close();
@@ -67,7 +67,7 @@ public class DataAccess
             Console.WriteLine(e.Message);
         }
 
-        for(int i = 0; i <= favStack.Count -1; i++)
+        for (int i = 0; i <= favStack.Count - 1; i++)
         {
             favorites.Add(GetPost(favStack[i]));
         }
@@ -127,6 +127,124 @@ public class DataAccess
         return foundPostsList;
     }
     /*
+     * Gets a the total number of available pages for incriments of ten posts
+     * @param none
+     * @return returns a List of the requested posts.
+     */
+        public string GetTotalPostPages()
+        {
+            //get post count
+            int postCount = 0;
+            try
+            {
+                MySqlConnection conn1 = new MySqlConnection(connectionString);
+                conn1.Open();
+                MySqlCommand cmd1 = new MySqlCommand("SELECT COUNT(*) FROM gcai.PostModel", conn1);
+                MySqlDataReader reader1 = cmd1.ExecuteReader();
+                while (reader1.Read())
+                {
+                    postCount = int.Parse(reader1.GetString(0));
+                }
+                reader1.Close();
+                conn1.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            Double pageCount = postCount / 10;
+            return pageCount.ToString();
+        } 
+
+        /*
+         * Gets a range of 10 posts based on a page number. 
+         * @param pageNumIn
+         * @return returns a List of the requested posts.
+         */
+        public List<PostModel> GetPostsByPage(int pageNumIn)
+    {
+    //get post count
+    int postCount = 0;
+    try
+    {
+        MySqlConnection conn1 = new MySqlConnection(connectionString);
+        conn1.Open();
+        MySqlCommand cmd1 = new MySqlCommand("SELECT COUNT(*) FROM gcai.PostModel", conn1);
+        MySqlDataReader reader1 = cmd1.ExecuteReader();
+        while (reader1.Read())
+        {
+            postCount = int.Parse(reader1.GetString(0));                
+        }
+        reader1.Close();
+        conn1.Close();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+    }
+        Double pageCount = postCount / 10;
+        int endPostNum = 0;
+        int startPostNum = 0;
+        if(pageNumIn == 1)
+        {
+            endPostNum = 9;
+            startPostNum = 0;
+        } else if (pageNumIn >= pageCount)
+        {
+            endPostNum = postCount;
+            startPostNum = endPostNum - 10;
+        }
+        else
+        {
+            endPostNum = pageNumIn * 10;
+            startPostNum = endPostNum - 10;
+        }
+        List<PostModel> foundPostsList = new List<PostModel>();
+        try
+        {
+            MySqlConnection conn1 = new MySqlConnection(connectionString);
+            conn1.Open();
+            MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM gcai.PostModel ORDER BY idPostModel DESC LIMIT @startPostNum, @endPostNum", conn1);
+            cmd1.Parameters.AddWithValue("@startPostNum", startPostNum);
+            cmd1.Parameters.AddWithValue("@endPostNum", endPostNum);
+            MySqlDataReader reader1 = cmd1.ExecuteReader();
+            while (reader1.Read())
+            {
+                PostModel userPosts = new PostModel();
+                userPosts.idPostModel = reader1.GetString(0);
+                userPosts.UserId = reader1.GetString(1);
+                userPosts.PostType = reader1.GetString(2);
+                userPosts.Humor = reader1.GetString(3);
+                userPosts.Problem = reader1.GetString(4);
+                userPosts.Solution = reader1.GetString(5);
+                userPosts.Truth = reader1.GetString(6);
+                userPosts.PostDate = reader1.GetString(7);
+                userPosts.NumPromotions = reader1.GetInt16(8);
+                userPosts.NumDemotions = reader1.GetInt16(9);
+                userPosts.NumFlags = reader1.GetInt16(10);
+                userPosts.ScreenName = reader1.GetString(11);
+
+                foundPostsList.Add(userPosts);
+            }
+            //returns a task error if no records are found.           
+            if (reader1.HasRows == false && foundPostsList.Count == 0)
+            {
+                PostModel userPosts2 = new PostModel();
+                userPosts2.idPostModel = "Not Found";
+                foundPostsList.Add(userPosts2);
+                return foundPostsList;
+            }
+            reader1.Close();
+
+            conn1.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return foundPostsList;
+    }
+    /*
      * Gets all of the posts for a secific user
      * @param userId a users email address 
      * @return returns a List of posts
@@ -178,7 +296,7 @@ public class DataAccess
     }
 
     /*
-     * Gets all single post based on post id
+     * Gets a single post based on post id
      * @param userId a users email address 
      * @return returns a PostModel object
      */
@@ -233,7 +351,6 @@ public class DataAccess
     public PostModel PutNewPost(PostModel postIn)
     {
         PostModel postWithId;
-
         try
         {
             string sqlPostString = "INSERT INTO gcai.PostModel (idPostModel, UserId, PostType, Humor, Problem, Solution, Truth, PostDate, NumPromotions, NumDemotions, NumFlags, ScreenName) VALUES (@idPostModel, @UserId, @PostType, @Humor, @Problem, @Solution, @Truth, @PostDate, @NumPromotions, @NumDemotions, @NumFlags, @ScreenName)";
@@ -910,4 +1027,40 @@ public class DataAccess
             Console.WriteLine(ex.ToString());
         }
     }
+    public string NewTotalPagesPages()
+    {
+        int postCount = 0;
+        try
+        {
+            MySqlConnection conn1 = new MySqlConnection(connectionString);
+            conn1.Open();
+            MySqlCommand cmd1 = new MySqlCommand("SELECT COUNT(*) FROM gcai.PostModel", conn1);
+            MySqlDataReader reader1 = cmd1.ExecuteReader();
+            while (reader1.Read())
+            {
+                postCount = int.Parse(reader1.GetString(0));
+            }
+            reader1.Close();
+            conn1.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        Double pageCount = postCount / 10;
+        string newTotalPages = pageCount.ToString();
+
+        return newTotalPages;
+
+    }
+
+    public List<string> PostsToRemoveList(int pageNumIn)
+    {
+        List<string> list = new List<string>();
+        List<PostModel> posts = GetPostsByPage(pageNumIn);
+
+        //find post id's that are for the current page and create a removal list of the 20 previos and 20 next to return for removal?
+        return list;
+    }
+
 }

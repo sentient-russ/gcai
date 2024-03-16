@@ -102,10 +102,12 @@ body {
     font-family: 'Taviraj', serif;
     text-align: center;
 }
+
+
+
 .nav {
     text-decoration: none !important;
     height: 64px;
-    
 }
 .navbar {
     position: fixed;
@@ -1024,7 +1026,197 @@ th{
 .terms-text.h3 {
     font-weight: 500;
 }
+/*begin post nav*/
 
+.disabled{
+    opacity: 25;
+}
+
+.back-nav {
+    display: flex;
+}
+
+.forward-nav {
+    display: flex;
+}
+
+.left-nav-end {
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: rgb(70, 85, 93);
+    max-height: 40px;
+    min-height: 40px;
+    max-width: 60px;
+    min-width: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.left-nav-next {
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: rgb(70, 85, 93);
+    max-height: 40px;
+    min-height: 40px;
+    max-width: 60px;
+    min-width: 60px;
+    cursor: pointer;
+    margin-left:5px;
+}
+
+.left-nav-end:hover {
+    background-color: #bababa37;
+}
+
+.left-nav-next:hover {
+    background-color: #bababa37;
+}
+
+.right-nav-end {
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: rgb(70, 85, 93);
+    max-height: 40px;
+    min-height: 40px;
+    max-width: 60px;
+    min-width: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.right-nav-next {
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: rgb(70, 85, 93);
+    max-height: 40px;
+    min-height: 40px;
+    max-width: 60px;
+    min-width: 60px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.right-nav-end:hover {
+    background-color: #bababa37;
+}
+
+.right-nav-next:hover {
+    background-color: #bababa37;
+}
+
+.sudo-hidden {
+    opacity: 0 !important;
+    font-size: 0px !important;
+}
+.nav-post-range-col {
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(45px);
+    max-height: 40px;
+    margin-right: 11%;
+    margin-left: 10%;
+    opacity: .5;
+    color: #E2E8DD;
+    font-family: 'Taviraj', serif;
+    align-content: center;
+    position: relative;
+}
+
+.start-page-text-left {
+    margin: 0;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    left: 27px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+.prev {
+    margin: 0;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    left: 85px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+.next {
+    margin: 0;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    right: 86px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+.end-page-text-right {
+    margin: 0;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    right: 31px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+.left-single-arrow {
+    justify-content: center;
+    left: 3.5px;
+    max-height: 55%;
+    margin: 0;
+    position: absolute;
+    top: 25%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transform: rotate(180deg);
+    opacity: .75;
+}
+
+.left-double-arrow {
+    justify-content: center;
+    left: 65px;
+    max-height: 55%;
+    margin: 0;
+    position: absolute;
+    top: 25%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transform: rotate(180deg);
+    opacity: .75;
+}
+
+.right-single-arrow {
+    justify-content: center;
+    right: 65px;
+    max-height: 55%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: .75;
+}
+
+.right-double-arrow {
+    justify-content: center;
+    right: 5px;
+    max-height: 55%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: .75;
+}
+/*end post nav*/
 .messages-container {
     display: flex;
     flex-direction: column;
@@ -1059,7 +1251,6 @@ th{
     font-weight: bold;
 
 }
-
 .avatar-row {
     display: flex;
     flex-direction: row;
