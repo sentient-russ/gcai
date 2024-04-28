@@ -47,7 +47,6 @@ namespace gcai.Models
         [DisplayName("Post Date")]
         public string? PostDate { get; set; } = "";
 
-
         //The following feilds are used for vote totals stored in the gcai.postModel table 
         [BindProperty(SupportsGet = true, Name = "Promotions")]
         [DisplayName("Promotions")]

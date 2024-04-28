@@ -43,7 +43,6 @@ namespace gcai.Services
 
                 }
 
-
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
                 client.DefaultRequestHeaders.Add("Accept", "*/*");
 
@@ -66,8 +65,7 @@ namespace gcai.Services
                 /*aiResultModel.Prompt = aiModelIn.Prompt.Replace(aiContext, "");*/
                 aiResultModel.Context = aiModelIn.Prompt;
                 aiResultModel.PostDate = aiModelIn.PostDate;
-                aiResultModel.ScreenName = aiModelIn.ScreenName;
-                
+                aiResultModel.ScreenName = aiModelIn.ScreenName;               
 
                 return aiResultModel;
             }

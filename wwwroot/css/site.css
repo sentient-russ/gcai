@@ -228,7 +228,7 @@ body {
     display: flex;
     flex-direction: row;
     position: absolute;
-    top: 19vw;
+    top: 22vw;
     padding-left: 10%;
     padding-right: 10%;
     min-width: 100%;
@@ -236,10 +236,10 @@ body {
     font-family: 'EB Garamond', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-weight: 900;
+    /*font-weight: 600;*/
     color: #E2E8DD;
-    text-shadow: 0px 6px 6px rgb(58, 68, 73, .75);
-    opacity: .75;
+    text-shadow: 0px 6px 6px rgb(58, 68, 73, .95);
+    opacity: .9;
 }
 .border-bottom {
     border-bottom: 1px solid #0d1725 !important;
@@ -807,15 +807,18 @@ th{
     flex-direction: row;
     justify-content:center;
     transform: translateY(-85%);
-
 }
 
 .angled-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 35vw;
     border: 1px solid #0d1725a7;
     border-radius: 10px;
     transform: perspective(500px) rotateY(10deg) rotateX(10deg) scale(.9);
-    margin: 4vw 10vw;
+    margin: 0;
+    margin-right: calc(5vw);
     box-shadow: 5px 21px 35px 0px rgba(0,0,0,.5);
     padding-bottom: 10px;
     background-color: rgba(92, 107, 115, 1);
@@ -834,11 +837,15 @@ th{
 
     }
 .angled-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 35vw;
     border: 1px solid #0d1725a7;
     border-radius: 10px;
     transform: perspective(500px) rotateY(-10deg) rotateX(10deg) scale(.9);
-    margin: 4vw 10vw;
+    margin: 0;
+    margin-left: calc(5vw);
     box-shadow: 5px 21px 35px 0px rgba(0,0,0,.5);
     padding-bottom: 10px;
     background-color: rgba(92, 107, 115, 1);
@@ -907,8 +914,14 @@ th{
     cursor: pointer;
 }
 .io-example {
-    width: 30vw;
-    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-around;
+    text-align: center;
+    min-width: 92%;
+    min-height: 40%;
+    padding:5px;
 }
 
 
@@ -1982,9 +1995,6 @@ th{
     .user-tag-row {
         display: inline flow-root list-item;
     }
-
-
-
     .banner-container {
         transform: translateY(20px)
     }
@@ -1997,6 +2007,8 @@ th{
         font-size: calc(.9em + 1.25vw);
         letter-spacing: .015em;
     }
+
+    
 }
 @media (max-width: 400px) {
     .banner-container {

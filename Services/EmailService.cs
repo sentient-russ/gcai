@@ -4,13 +4,11 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 
-
-
 namespace gcai.Services
 {
     public class EmailService
     {
-
+        private string GC_Email_Pass = Environment.GetEnvironmentVariable("GC_Email_Pass");
         public String SendContactMessage(ContactDataModel complexDataIn)
         {
             var email = new MimeMessage();
@@ -25,7 +23,7 @@ namespace gcai.Services
             };
             using var smtp = new SmtpClient();
             smtp.Connect("us2.smtp.mailhostbox.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("cs@magnadigi.com", "#WrncUkPJ3");
+            smtp.Authenticate("cs@magnadigi.com", GC_Email_Pass);
             var response = smtp.Send(email);
             smtp.Disconnect(true);
             return response;

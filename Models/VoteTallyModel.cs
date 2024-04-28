@@ -14,13 +14,9 @@ namespace gcai.Models
         [Key]
         public string? idVoteModel { get; set; } = "0";
         public string? PostRefNum { get; set; } = "0";
-
         public string? UpVotedTotal { get; set; } = "0";
-
         public string? DownVotedTotal { get; set; } = "0";
-
         public string? StarVotedTotal { get; set; } = "0";
-
         public string? FlaggedTotal { get; set; } = "0";
     }
 

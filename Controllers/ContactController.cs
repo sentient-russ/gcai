@@ -24,18 +24,6 @@ namespace magnadigi.Controllers
         [BindProperty(SupportsGet = true, Name = "Name")]
         public string? Name { get; set; }
 
-/*        [Required]
-        [StringLength(50, MinimumLength = 4)]
-        [DisplayName("Business Name:")]
-        [BindProperty(SupportsGet = true, Name = "Business")]
-        public string? Business { get; set; }*/
-
-/*        [Required]
-        [StringLength(14, MinimumLength = 10)]
-        [DisplayName("Phone Number:")]
-        [BindProperty(SupportsGet = true, Name = "Phone")]
-        public string? Phone { get; set; }*/
-
         [Required]
         [DataType(DataType.EmailAddress)]
         [StringLength(255, MinimumLength = 1)]
@@ -49,18 +37,6 @@ namespace magnadigi.Controllers
         [DisplayName("Message:")]
         [BindProperty(SupportsGet = true, Name = "Message")]
         public string? Message { get; set; }
-
-/*        [Required]
-        [DataType(DataType.Date)]
-        [DisplayName("Projected Start Date:")]
-        [BindProperty(SupportsGet = true, Name = "startDate")]
-        public DateTime startDate { get; set; }*/
-
-/*        [Required]
-        [DefaultValue(1)]
-        [DisplayName("Priority Level")]
-        [BindProperty(SupportsGet = true, Name = "priorityLevel")]
-        public string priorityLevel { get; set; } = "High";*/
 
         [HttpPost]
         public IActionResult PostAsync([FromForm] ContactDataModel ComplexDataIn)

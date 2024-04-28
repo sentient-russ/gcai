@@ -1053,7 +1053,6 @@ public class DataAccess
         return newTotalPages;
 
     }
-
     public List<string> PostsToRemoveList(int pageNumIn)
     {
         List<string> list = new List<string>();

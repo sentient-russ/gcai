@@ -14,18 +14,6 @@ namespace gcia.Controllers
         [BindProperty(SupportsGet = true, Name = "Name")]
         public string? Name { get; set; }
 
-/*        [Required]
-        [StringLength(50, MinimumLength = 4)]
-        [DisplayName("Business Name:")]
-        [BindProperty(SupportsGet = true, Name = "Business")]
-        public string? Business { get; set; }*/
-
-/*        [Required]
-        [StringLength(50, MinimumLength = 6)]
-        [DisplayName("Phone Number:")]
-        [BindProperty(SupportsGet = true, Name = "Phone")]
-        public string? Phone { get; set; }*/
-
         [Required]
         [DataType(DataType.EmailAddress)]
         [StringLength(255, MinimumLength = 1)]
@@ -39,17 +27,5 @@ namespace gcia.Controllers
         [DisplayName("Message:")]
         [BindProperty(SupportsGet = true, Name = "Message")]
         public string? Message { get; set; }
-
-/*        [DataType(DataType.Date)]
-        [DisplayName("Projected Start Date:")]
-        [BindProperty(SupportsGet = true, Name = "startDate")]
-        public DateTime startDate { get; set; } = DateTime.Now;*/
-
-/*        [Required]
-        [DisplayName("Priority Level")]
-        [BindProperty(SupportsGet = true, Name = "priorityLevel")]
-        public string priorityLevel { get; set; }*/
-
     }
-
 }

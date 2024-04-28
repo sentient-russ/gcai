@@ -13,12 +13,14 @@ namespace gcai.Areas.Identity.Services;
 public class EmailSender : IEmailSender
 {
     private readonly ILogger _logger;
+    private string GC_Email_Pass;
 
     public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
                        ILogger<EmailSender> logger)
     {
         Options = optionsAccessor.Value;
         _logger = logger;
+        GC_Email_Pass = Environment.GetEnvironmentVariable("GC_Email_Pass");
     }
 
     public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
@@ -40,7 +42,7 @@ public class EmailSender : IEmailSender
         };
         using var smtp = new SmtpClient();
         smtp.Connect("us2.smtp.mailhostbox.com", 587, SecureSocketOptions.StartTls);
-        smtp.Authenticate("cs@magnadigi.com", "#WrncUkPJ3");
+        smtp.Authenticate("cs@magnadigi.com", GC_Email_Pass);
         var response = smtp.Send(email);
         smtp.Disconnect(true);
         _logger.LogInformation("The message smtp send to " + toEmail + "was attempted and returned a status of: " + response);

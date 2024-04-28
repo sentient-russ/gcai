@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Builder;
 using gcai.Areas.Identity.Services;
 using gcia.Areas.Identity.Services;
 using Azure;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -45,19 +46,23 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 //configure connection string from environment variables thus hidding it from production
 var environ = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var connectionString = "";
+var GC_Email_Pass = "";
 if (environ == "Production")
 {
     //pulls connection string from environment variables
     connectionString = Environment.GetEnvironmentVariable("MariaDbConnectionStringLocal");
+    GC_Email_Pass = Environment.GetEnvironmentVariable(GC_Email_Pass);
 }
 else
 {
     //pulls connection string from development local version of secrets.json
     connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionStringRemote");
+    GC_Email_Pass = builder.Configuration.GetConnectionString("GC_Email_Pass");
+
 
 }
 Environment.SetEnvironmentVariable("DbConnectionString", connectionString);//this is used in services to access the string
-//adds the MySQL dbcontext
+Environment.SetEnvironmentVariable("GC_Email_Pass", GC_Email_Pass);
 
 builder.Services.AddDbContext<gcai.Data.ApplicationDbContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 6, 11)), options => options.EnableRetryOnFailure())); 
 //UseMySql can be configured in the following ways.  Ignore option must be enabled to perform code first migrations with the MySql database 
