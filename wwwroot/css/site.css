@@ -59,6 +59,7 @@ body {
     animation-fill-mode: forwards;
     animation-duration: 1.25s;
 }
+
 @keyframes banner-fade-out {
     0% {
         opacity: 1;
@@ -136,7 +137,6 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
     font-family: 'EB Garamond', serif;
     font-size: 1.5rem;
     font-weight: 600;
@@ -144,8 +144,8 @@ body {
 }
 .nav-link:hover {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-    color: #333 !important;
-    opacity: .65;
+    color: #0d1725 !important;
+    opacity: 1;
 }
 .user-tag-row {
     display: flex;
@@ -154,12 +154,13 @@ body {
     color: #38405f !important;
     text-decoration: none;
     margin-bottom: -5px;
+
 }
 .tag-column {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-top: 10px;
 }
 .tag-button {
     display: flex;
@@ -168,34 +169,79 @@ body {
     border-color: rgb(92, 107, 115, 1);
     margin: 5px;
     border-width: .5px;
-    border-color: rgb(255,234,215, .15);
+    border-color: rgb(255,244,245, .55);
     border-style: solid;
+    background-image: linear-gradient(30deg,#bababa -165%,rgb(92, 107, 115, .5),#587b9a 300%);
 }
 .tag-button-sub {
     display: flex;
+    border-width: .25px;
+    border-color: rgb(255,234,215, .5);
     align-items: center;
     margin: 5px;
+    height:10px
 }
 .tag-button-sub:hover {
     display: flex;
     align-items: center;
-    margin: 5px;
 }
 .tag-button:hover {
-    background-color: rgb(92, 107, 115, 1);
-    border-color: #0d1725; /*dark blue*/
-    border-width: 3px;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-    border-width: .5px;
-    border-color: rgb(255,234,215, .15);
+    background-image: linear-gradient(30deg,#dde6e8a6 -130%,rgba(92, 107, 115, .15),#587b9a 315%);
+    border-width: .25px;
+    border-color: rgb(255,234,215, 1);
+    font-weight: 700;
     border-style: solid;
+    color: white;
+    opacity: 1;
 }
-.name-color {
-    font-weight:600;
+.sign-up {
+    border-width: .1px;
+    font-weight: 400;
+    color: #E2E8DD !important;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
     font-family: 'EB Garamond', serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 5px;
+    min-height: 30px;
+    max-height: 30px;
+    color: #0d1725 !important;
 }
+
+.sign-out {
+    border-width: .1px;
+    font-weight: 400;
+    color: #E2E8DD !important;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 5px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+.sign-in {
+    border-width: .1px;
+    font-weight: 400;
+    color: #E2E8DD !important;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 5px;
+    min-height: 30px;
+    max-height: 30px;
+    color: #0d1725 !important;
+}
+
+
 .main-container{
     height:100vh;
 }
@@ -236,10 +282,8 @@ body {
     font-family: 'EB Garamond', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /*font-weight: 600;*/
     color: #E2E8DD;
-    text-shadow: 0px 6px 6px rgb(58, 68, 73, .95);
-    opacity: .9;
+    height: 20px;
 }
 .border-bottom {
     border-bottom: 1px solid #0d1725 !important;
@@ -1302,12 +1346,42 @@ th{
     min-width: 25px;
 
 }
+.name-color {
+    font-family: 'EB Garamond', serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.signed-in {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px;
+    border-width: .1px;
+    color: #E2E8DD !important;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'EB Garamond', serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 5px;
+    min-height: 50px;
+}
 .material-symbols-outlined {
-    color: rgb(156, 156, 159);
+    font-weight: 600;
     font-size: 25px;
+    padding-left: 2.5px;
+    padding-right: 5px;
+    color: #0d1725 !important;
 }
 .total-contributions {
-    color: #bababa !important;
+    color: #0d1725 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 600;
+    font-size: 1.25rem;
+
 }
 .vote-count {
     display: flex;
@@ -1972,8 +2046,8 @@ th{
 }
 @media (min-width: 576px) {
     .navbar-expand-sm .navbar-nav .nav-link {
-        padding-right: .25rem;
-        padding-left: .25rem;
+        padding-right: .75rem;
+        padding-left: .75rem;
 
     }
 }

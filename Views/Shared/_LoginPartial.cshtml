@@ -27,28 +27,24 @@
         <div class="contributions hidden" id="@contributions"></div>
         <div class="username hidden" id="@uname"></div>
         <a asp-area="Portal" asp-controller="Portal" asp-action="Index">
-        <li class="nav-item tag-button">
-            <div class="flex-column">
-                <div class="user-tag-row">
-                    <span class="nav-link" >
-                        Welcome back,&nbsp<span class="name-color">@screenname</span>!
-                    </span>
-            </div>
-                <div class="user-tag-row">
-                    <div class="flex-column total-contributions">
-                        @contributions
+            <div class="nav-item tag-button">
+                <div class="signed-in">
+                        <span class="signed-in">
+                            <span class="name-color">@screenname,</span>
+                        </span>
+                        <span class="total-contributions">
+                            @contributions
+                        </span>
+                        <span class="material-symbols-outlined">
+                            social_leaderboard
+                        </span>
                     </div>
-                    <div class="flex-column tag-column">
-                        <span class="material-symbols-outlined">social_leaderboard</span>
-                    </div>
-                </div>
             </div>
-        </li>
         </a>
         <a class="form-inline tag-button" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
         <li class="nav-item ">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link">Logout</button>
+            <form id="logoutForm" class="form-inline sign-out" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="btn sign-out">Sign out</button>
             </form>
         </li>
         </a>
@@ -60,11 +56,17 @@
         <div class="screenname hidden" id="Anonymous"></div>
         <div class="contributions hidden" id="0"></div>
         <div class="username hidden" id="anonymous@magnadigi.com"></div>
-        <a class="nav-link text-dark tag-button" id="register" asp-area="Identity" asp-page="/Account/Register">
-            <li class="nav-item tag-button-sub">Register</li>
+        <span class="signed-in">
+            <img style="max-height: 30px;" src="/img/flames.png">
+        </span>
+        <a class="text-dark tag-button" id="register" asp-area="Identity" asp-page="/Account/Register">
+
+
+        <li class="nav-item tag-button-sub sign-up">Sign up</li>
         </a>
-        <a class="nav-link text-dark tag-button" id="login" asp-area="Identity" asp-page="/Account/Login">
-        <li class="nav-item tag-button-sub">Login</li>
+
+        <a class="text-dark tag-button" id="login" asp-area="Identity" asp-page="/Account/Login">
+        <li class="nav-item tag-button-sub sign-in">Sign in</li>
         </a>
     }
 </ul>

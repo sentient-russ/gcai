@@ -1,7 +1,8 @@
 /* Config */
 :root {
-  --sk-size: 40px;
-  --sk-color: #333;
+    --sk-size: 40px;
+    --sk-color: #E2E8DD !important;
+    ;
 }
 
 
