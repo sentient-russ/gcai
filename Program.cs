@@ -18,7 +18,7 @@ using gcai.Areas.Identity.Services;
 using gcia.Areas.Identity.Services;
 using Azure;
 using Microsoft.Extensions.Configuration;
-
+//testing :)
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 //required for Apache reverse proxy
