@@ -42,7 +42,7 @@ namespace magnadigi.Controllers
         public IActionResult PostAsync([FromForm] ContactDataModel ComplexDataIn)
         {
 
-            EmailService emailService = new EmailService();
+            EmailSender emailService = new EmailSender();
             string response = emailService.SendContactMessage(ComplexDataIn);
             bool messageSent;
             if (response.Contains("Ok"))

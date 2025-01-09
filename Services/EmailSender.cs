@@ -6,9 +6,13 @@ using MimeKit;
 
 namespace gcai.Services
 {
-    public class EmailService
+    public class EmailSender
     {
-        private string GC_Email_Pass = Environment.GetEnvironmentVariable("GC_Email_Pass");
+
+        private string? emailPass = Environment.GetEnvironmentVariable("GC_Email_Pass");
+        private string? emailAddress = Environment.GetEnvironmentVariable("GC_Email_Address");
+        private string? emailServer = Environment.GetEnvironmentVariable("GC_Email_Server");
+
         public String SendContactMessage(ContactDataModel complexDataIn)
         {
             var email = new MimeMessage();
@@ -22,8 +26,8 @@ namespace gcai.Services
               "<p><strong>Message: </strong>" + complexDataIn.Message + "</p>"
             };
             using var smtp = new SmtpClient();
-            smtp.Connect("us2.smtp.mailhostbox.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("cs@magnadigi.com", GC_Email_Pass);
+            smtp.Connect(emailServer, 465, SecureSocketOptions.StartTls);
+            smtp.Authenticate(emailAddress, emailPass);
             var response = smtp.Send(email);
             smtp.Disconnect(true);
             return response;

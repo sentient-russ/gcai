@@ -12,7 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Newtonsoft.Json;
 using MySqlX.XDevAPI;
 
-namespace gcio.Hubs
+namespace gcai.Hubs
 {
     public class PostHub : Hub
     {
@@ -336,7 +336,6 @@ namespace gcio.Hubs
             postData.Add(userVotes.DownVoted);
             postData.Add(userVotes.StarVoted);
             postData.Add(userVotes.Flagged);
-
             await Clients.All.SendAsync("ReceiveMessageHumor", JsonConvert.SerializeObject(postData));
         }
         //sends indevidual message to all clients
@@ -408,7 +407,7 @@ namespace gcio.Hubs
             queryModel.ScreenName = screenname;
             AIAccess aiAccess = new AIAccess();
             AIModel aiResponse = new AIModel();
-            aiResponse = await aiAccess.QueryAI(queryModel);
+            aiResponse = await aiAccess.QueryAI_OpenHermes(queryModel);
             AIModel storedResponse = new AIModel();
             DataAccess storeQuery = new DataAccess();
             storedResponse = storeQuery.PutNewAIExchange(aiResponse);
